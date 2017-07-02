@@ -1,0 +1,92 @@
+<div class="form-inline table-header">
+  <div class="form-group">
+    <label for="pagesize">每页显示：</label>
+    <select class="form-control" id="pagesize">
+      <option selected>10</option>
+      <option>20</option>
+      <option>50</option>
+    </select>
+  </div>
+  <div class="form-group pull-right">
+    <label for="search-query">搜索：</label>
+    <input type="search" class="form-control" id="search-query">
+  </div>
+</div>
+
+<table class="table table-bordered table-hover responsive-table smart-table" data-url="{{API}}apply/" data-pagination=".pagination" data-pagesize-controller="#pagesize" data-pagesize="10" data-search="#search-query">
+  <thead>
+  <tr>
+    <th class="filter">管理名</th>
+    <th>针对</th>
+    <th>调整（前）后</th>
+    <th>提交时间</th>
+    <th>附言</th>
+    <th>处理时间</th>
+    <th>回复</th>
+    <th>操作人</th>
+    <th>操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <script type="text/x-handlebars-template">
+    <tr id="{{id}}" class="ad-{{adid}}">
+      <td data-title="管理名">
+        {{#if agreement_id}}
+        <a href="#/agreement_id/{{agreement_id}}" class="filter label label-agreement">{{channel}}</a>
+        {{else if channel}}
+        <a href="#/channel/{{channel}}" class="filter label label-channel">{{channel}}</a>
+        {{/if}}
+        <a href="#/ad_name/{{ad_name}}" class="filter label label-ad_name">{{ad_name}}</a>
+        {{cid}}
+      </td>
+      <td data-title="针对">{{label}}</td>
+      <td data-title="调整（前）后">
+        {{#if is_url}}
+        <a href="{{before}}">原链接</a> / <a href="{{#if ad_url}}{{ad_url}}{{else}}{{after}}{{/if}}">现链接</a>
+        {{#unless handler}}
+        <a class="edit btn btn-warning" href="#ad_url" data-type="file" data-accept="*.apk" data-comment-name="message"><i class="fa fa-upload"></i> 编辑</a>
+        {{/unless}}
+        {{else if is_status}}
+        {{#if before}}{{pick before '上线' '下线'}} / {{/if}}{{pick after '上线' '下线'}}
+        {{else if is_replace}}
+        <a href="#/ad/{{adid}}">新广告</a>
+        {{else}}
+        {{#if before}}{{before}} / {{/if}}
+        {{#if handler}}{{after}}{{else}}<a class="edit" data-type="number" href="#after">{{after}}</a>{{/if}}
+        {{/if}}
+      </td>
+      <td data-title="提交时间"><time datetime="{{create_time}}">{{moment create_time}}</time></td>
+      <td data-title="附言">{{send_msg}}</td>
+      <td data-title="处理时间"><time datetime="{{handle_time}}">{{moment handle_time}}</time></td>
+      <td data-title="回复">{{reply_msg}}</td>
+      <td data-title="操作人">{{handler}}</td>
+      <td data-title="操作">
+        {{#if handler}}
+        <span class="text-{{pick status 'info' 'success' 'danger' 'default'}}"><i class="fa fa-{{pick status 'play' 'check' 'times' 'trash-o'}}"></i> {{pick status '申请中' '已批准' '已拒绝' '撤回'}}</span>
+        {{else if is_replace}}
+        等待审批。替换广告暂时不能撤销。
+        {{else}}
+        <button class="btn btn-danger delete-button" data-msg="您确定要撤销申请么？"><i class="fa fa-times"></i> 撤消申请</button>
+        {{/if}}
+      </td>
+    </tr>
+  </script>
+  </tbody>
+  <tfoot class="waiting">
+  <tr>
+    <td colspan="9"><p align="center"><i class="fa fa-spinner fa-spin fa-2x"></i><br>加载中，请稍候</p></td>
+  </tr>
+  </tfoot>
+</table>
+
+<nav class="pull-right">
+  <ul class="pagination">
+    <script type="text/x-handlebars-template">
+      <li><a href="#/to/{{prev}}"><i class="fa fa-chevron-left"></i></a></li>
+      {{#each pages}}
+      <li class="hidden-xs"><a href="#/to/{{index}}">{{label}}</a></li>
+      {{/each}}
+      <li><a href="#/to/{{next}}"><i class="fa fa-chevron-right"></i></a></li>
+    </script>
+  </ul>
+</nav>

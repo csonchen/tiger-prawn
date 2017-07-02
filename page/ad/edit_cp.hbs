@@ -1,0 +1,152 @@
+<div class="row">
+  <form class="form-horizontal model-editor iPhone {{#if renew}}renew{{/if}} {{#if edit}}in_edit{{/if}} col-sm-8 col-xs-12" method="post" data-mediator-class="tp.page.CPEditor" data-target="diy">
+    <fieldset>
+      <a name="basic-info"></a>
+      <legend>基础信息</legend>
+      <div class="form-group has-feedback">
+        <label class="col-sm-2 control-label" for="ad_name">广告名称</label>
+        <div class="col-sm-6">
+          <input type="text" name="ad_name" id="ad_name" class="form-control" required value="{{ad_name}}" />
+        </div>
+      </div>
+      <div class="form-group has-feedback">
+        <label class="col-sm-2 control-label" for="ad_url">iTunes地址</label>
+        <div class="col-sm-10">
+          <input type="url" name="ad_url" id="ad_url" class="form-control" required pattern="^https://itunes.apple.com/(.*)" value="{{ad_url}}">
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <a name="tou"></a>
+      <legend>投放信息</legend>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">投放计划</label>
+        <div class="col-sm-10">
+          <table class="table">
+            <thead>
+            <tr>
+              <th width="30%">开始时间</th>
+              <th width="30%">结束时间</th>
+              <th>关键词</th>
+              <th>份数</th>
+              <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <script type="text/x-handlebars-template">
+              {{{{raw-helper}}}}
+                <tr id="{{cid}}">
+                  <td>
+                    <div class="input-group">
+                      <input type="datetime" class="datetimepicker start_time form-control" id="start_time-{{cid}}" name="start_time-{{cid}}" data-default-date="{{start_time}}">
+                      <label class="input-group-addon" for="start_time-{{cid}}"><i class="fa fa-calendar"></i></label>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="input-group">
+                      <input type="datetime" class="datetimepicker end_time form-control" id="end_time-{{cid}}" name="end_time-{{cid}}" data-default-date="{{end_time}}">
+                      <label class="input-group-addon" for="end_time-{{cid}}"><i class="fa fa-calendar"></i></label>
+                    </div>
+                  </td>
+                  <td><input class="form-control" name="keyword-{{cid}}" placeholder="关键词" value="{{keyword}}"></td>
+                  <td><input type="number" class="form-control num" name="num-{{cid}}" placeholder="份数" min="1" value="{{num}}"></td>
+                  <td><button type="button" class="btn btn-danger delete-button"><i class="fa fa-times"></i></button></td>
+                </tr>
+              {{{{/raw-helper}}}}
+            </script>
+            </tbody>
+            <tfoot>
+            <tr>
+              <td colspan="5">
+                <button type="button" class="add-button btn btn-info"><i class="fa fa-plus"></i> 添加</button>
+              </td>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="total_num">总计投放</label>
+        <div class="col-sm-6">
+          <input type="number" name="total_num" id="total_num" class="form-control" readonly value="{{total_num}}">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="quote_rmb">投放单价</label>
+        <div class="col-sm-6">
+          <div class="input-group">
+            <span class="input-group-addon">&yen;</span>
+            <input type="number" name="quote_rmb" class="form-control" id="quote_rmb" step="0.01" value="{{quote_rmb}}">
+            <span class="input-group-addon">元</span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group iPhone">
+        <label class="col-sm-2 control-label">目标平台</label>
+        <div class="col-sm-10 select-button">
+          <input type="radio" name="put_ipad" value="2" id="put-ipad-iphone" {{#unless put_ipad}}checked{{/unless}}{{#equal put_ipad '2'}}checked{{/equal}} />
+          <label for="put-ipad-iphone">只投iPhone</label>
+          <input type="radio" name="put_ipad" value="1" id="put-ipad-ipad" {{#equal put_ipad '1'}}checked{{/equal}} />
+          <label for="put-ipad-ipad">只投iPad</label>
+          <input type="radio" name="put_ipad" value="0" id="put-ipad-all" {{#equal put_ipad '0'}}checked{{/equal}} />
+          <label for="put-ipad-all">iPhone + iPad</label>
+        </div>
+      </div>
+      <div class="form-group iPhone">
+        <label class="col-sm-2 control-label">是否 API 对接</label>
+        <div class="col-sm-10 select-button">
+          <input type="radio" name="is_api" value="1" id="is_api-1" {{#if is_api}}checked{{/if}}>
+          <label for="is_api-1">是</label>
+          <input type="radio" name="is_api" value="0" id="is_api-0" {{#unless is_api}}checked{{/unless}}>
+          <label for="is_api-0">否</label>
+        </div>
+      </div>
+      <div class="form-group iPhone">
+        <label class="col-sm-2 control-label">激活条件</label>
+        <div class="col-sm-10 select-button">
+          <input type="radio" name="cate" value="0" id="cate-0" {{#unless cate}}checked{{/unless}}>
+          <label for="cate-0">联网激活</label>
+          <input type="radio" name="cate" value="1" id="cate-1" {{#if cate}}checked{{/if}}>
+          <label for="cate-1">注册登录</label>
+        </div>
+      </div>
+      <div class="form-group iPhone">
+        <label class="col-sm-2 control-label">数据结算方式</label>
+        <div class="col-sm-10 select-button">
+          <input type="radio" name="settle_type" value="7" id="settle_type-7" {{#equal settle_type 7}}checked{{/equal}}>
+          <label for="settle_type-7">以点乐数据买量结算，保结算不核减</label>
+          <input type="radio" name="settle_type" value="4" id="settle_type-4" {{#equal settle_type 4}}checked{{/equal}}>
+          <label for="settle_type-4">以 API 接口回调数据结算</label>
+          <input type="radio" name="settle_type" value="10" id="settle_type-10" {{#equal settle_type 10}}checked{{/equal}}>
+          <label for="settle_type-10">点乐数据买量，次日核对</label>
+        </div>
+      </div>
+    </fieldset>
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <div class="alert alert-msg" style="display: none;"></div>
+        <div class="alert alert-info success-info hide">
+          将于<span>3</span>秒后跳转到投放计划列表页。[<a href="#/diy/">立刻跳转</a>]
+        </div>
+        <button class="btn btn-block btn-lg btn-primary"><i class="fa fa-save"></i> 提交</button>
+      </div>
+    </div>
+  </form>
+  <div class="col-sm-4 col-xs-12">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h4 class="panel-title"><a role="button" data-toggle="collapse" href="#notice" aria-expanded="true" aria-controls="notice"><i class="fa fa-info"></i> 创建投放计划须知</a></h4>
+      </div>
+      <div id="notice" class="panel-collapse collapse in">
+        <div class="panel-body">
+          <ul>
+            <li>创建投放计划后，您会收到一封确认邮件，请将这份邮件转发到指定邮箱。点乐运营将在收到邮件后立刻开始审批。</li>
+            <li>未开始审核的投放计划可以进行修改。</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+<div class="row dashboard-stats">
+  <div class="col-sm-6 dashboard-stat stat-secondary">
+    <i class="fa fa-check fa-3x circle-title"></i>
+    <div class="dashboard-stat-content">
+      <h3 class="title">昨日激活</h3>
+      <p>{{yesterday_transfer}}</p>
+    </div>
+  </div>
+  <div class="col-sm-6 dashboard-stat stat-tertiary">
+    <i class="fa fa-play fa-3x circle-title"></i>
+    <div class="dashboard-stat-content">
+      <h3 class="title">今日激活</h3>
+      <p>{{today_transfer}}</p>
+    </div>
+  </div>
+</div>
+<div class="row mt2e">
+  <div class="col-sm-12">
+    <div class="portlet portlet-blue">
+      <div class="portlet-leading">
+        <h4 class="portlet-title"><i class="fa fa-line-chart"></i> 最近一月激活走势</h4>
+      </div>
+      <div class="portlet-body">
+        <div class="morris-chart" style="height: 300px">
+          <script type="application/json">
+            {
+              "data": [
+                {{#each chart}}
+                {
+                  "date": "{{@key}}",
+                  "transfer": {{.}}
+                }{{#unless @last}},{{/unless}}
+                {{/each}}
+              ],
+              "xkey": "date",
+              "ykeys": ["transfer"],
+              "labels": ["激活数"]
+            }
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

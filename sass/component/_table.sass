@@ -1,0 +1,121 @@
+@charset "UTF-8"
+
+@import "../../bower_components/colors/sass/variables"
+@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/variables"
+@import "../../bower_components/font-awesome/scss/variables"
+@import "compass/css3/opacity"
+@import "../define"
+
+table
+  background-color: $white
+
+  .order.active
+    color: $brand-info
+    font-size: 1.15em
+
+    &:after
+      content: $fa-var-arrow-up
+      font-family: 'FontAwesome', sans-serif
+
+    &.inverse:after
+      content: $fa-var-arrow-down
+
+  .platform
+    font-size: 1.25em
+    margin-right: 0.25em
+
+    &.fa-android
+      color: $android-color
+
+    &.fa-apple
+      color: $silver
+
+  .label
+    font-size: 100%
+
+    &[data-toggle]
+      cursor: pointer
+
+  td,th
+    .label + .label
+      margin-left: 0.5em
+
+  .status
+
+    &.text-success
+      font-size: 1.15em
+
+    &.text-muted
+      color: $gray
+
+  input.status-button
+    display: none
+
+  tr.show
+    display: table-row !important
+
+  td.btn-group
+    display: table-cell
+    white-space: nowrap
+    font-size: 0
+
+    .btn
+      float: none
+
+  + .pagination
+    margin: 0
+
+  &.loading
+    @include opacity(0.5)
+
+  tfoot.waiting
+    text-align: center
+
+    .alert
+      margin-bottom: 0
+
+    .refresh-button
+      margin-top: 1em
+
+  .amount td,
+  .amount th
+    background-color: $panel-info-heading-bg
+
+    &.amount-label
+      text-align: right
+
+.table-header
+  margin-bottom: 1em
+
+  [type=search] + .fa-spinner
+    position: absolute
+    top: 0
+    right: 10px
+    line-height: 34px
+
+  .form-group
+    position: relative
+
+.table-footer
+  .form-group
+    display: inline-block
+    margin-bottom: 0
+    vertical-align: top
+
+  .form-control
+    display: inline-block
+    width: auto
+
+.fixed-table-header
+  border-bottom: 2px solid $table-border-color
+  display: none
+  position: fixed
+  top: $topbar-height + $gap-l
+  left: $sidebar-width + $gap-l
+  right: $gap-l
+
+  .table
+    margin-bottom: 0
+
+  .sidebar-collapsed &
+    left: $collapsed-sidebar-width + $gap-l

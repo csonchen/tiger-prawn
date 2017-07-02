@@ -1,0 +1,26 @@
+@charset "UTF-8"
+
+@import "define"
+@import "../bower_components/colors/sass/variables"
+
+.table + nav .pagination
+  margin: 0
+
+input[type=range]
+  display: inline-block
+  margin-top: 7px
+  width: 50%
+  vertical-align: middle
+
+  + .help-inline
+    vertical-align: bottom
+
+.modal-body form > *:last-child
+  margin-bottom: 0
+
+.tabpanel .tab-content
+  background-color: $white
+  padding: $gap
+
+  > *:last-child
+    margin-bottom: 0

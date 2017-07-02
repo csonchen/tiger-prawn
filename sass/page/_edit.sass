@@ -1,0 +1,37 @@
+@charset "UTF-8"
+
+@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/variables"
+@import "../../bower_components/colors/sass/variables"
+@import "../define"
+
+#ad-editor
+  .su-tabs
+    margin: 0
+
+  .uploader .tab-content
+    background-color: $white
+    border: 1px solid $nav-tabs-border-color
+    border-top: none
+    padding: $gap
+
+.Android .iPhone,
+.iPhone .Android,
+.offer .aso,
+.aso .offer
+  display: none !important
+
+#app-uploader
+  .su-tabs + button
+    margin-bottom: $gap
+
+.form-group.provinces
+  display: none
+
+  .show-provinces &
+    display: block
+
+.feedback-detail
+  display: none
+
+  .show-feedback-detail &
+    display: block

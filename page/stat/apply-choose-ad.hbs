@@ -1,0 +1,79 @@
+<table class="table table-hover table-striped table-bordered add-on-list" data-collection-id="invoice-list-{{ad_id}}" data-key="noCheckList">
+  <thead>
+    <tr>
+      <th>广告名称</th>
+      <th>渠道号</th>
+      <th>提醒</th>
+    </tr>
+  </thead>
+  <tbody>
+  {{{{raw-helper}}}}
+  <script type="text/x-handlebars-template">
+    <tr id="{{ad_id}}">
+      <td>{{ad_name}}</td>
+      <td>{{channel_id}}</td>
+      <td>{{#each dates}}{{.}}未对账{{/each}}</td>
+    </tr>
+    </script>
+  {{{{/raw-helper}}}}
+  </tbody>
+  <tfoot class="waiting">
+  <tr>
+    <td colspan="3">
+      <p align="center"><i class="fa fa-spin fa-spinner fa-2x"></i><br>加载中，请稍候</p>
+    </td>
+  </tr>
+  </tfoot>
+</table>
+<h4>选择结算的广告：</h4>
+<form id="popup-form" data-mediator-class="tp.page.AdSelector" method="post">
+  <div class="ad-date-range clearfix">
+    <div class="range">
+      <label class="control-label pull-left" id="settlement-period">结算周期：</label>
+      <div class="date input-group col-sm-2 col-md-2 pull-left">
+        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+        <input type="date" id="settle-start-date" class="form-control datetimepicker" name="start" data-format="YYYY-MM-DD">
+      </div>
+      <div class="date input-group col-sm-2 col-md-2 pull-left">
+        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+        <input type="date" id="settle-end-date" class="form-control datetimepicker" name="end" data-format="YYYY-MM-DD">
+      </div>
+      <button type="button" class="btn btn-primary" id="choose-ad-button"><i class="fa fa-play"></i> 检索</button>
+    </div>
+  </div>
+  <table id="settle-table" class="table" data-model="tp.model.AnalyseModel" data-url="{{API}}invoice/settle/{{ad_id}}" data-params="start={{start}}&end={{end}}" data-collection-id="invoice-list-{{ad_id}}" data-typeahead="false">
+    <thead>
+      <tr>
+        <th><input type="checkbox" value="ids" class="check-all"></th>
+        <th>广告名称</th>
+        <th>渠道号</th>
+        <th>提醒</th>
+      </tr>
+    </thead>
+    <tbody id="chose-ad-table">
+    {{{{raw-helper}}}}
+    <script type="text/x-handlebars-template">
+      {{#unless is_selected}}
+        <tr>
+          <td><label for="ids"><input type="checkbox" name="ids" value="{{ad_id}}"></label></td>
+          <td>{{ad_name}}</td>
+          <td>{{channel_id}}</td>
+          <td id="notice">
+            {{#each ad_notice}}{{#if @last}}{{date}}的渠道cpa为0。{{else}}{{date}}、{{/if}}{{/each}}
+            {{#each left_transfer_notice}}{{#if @last}}{{date}}有余量未确认。{{else}}{{date}}、{{/if}}{{/each}}
+          </td>
+        </tr>
+      {{/unless}}
+    </script>
+    {{{{/raw-helper}}}}
+    </tbody>
+    <tfoot id="no-ad-table" class="well">
+      <tr><td colspan="4">没有搜索结果</td></tr>
+    </tfoot>
+    <tfoot class="waiting">
+    <tr>
+      <td colspan="4"><i class="fa fa-spinner fa-spin fa-2x"></i><br>加载中，请稍候</td>
+    </tr>
+    </tfoot>
+  </table>
+</form>

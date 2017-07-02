@@ -1,0 +1,31 @@
+@charset "UTF-8"
+
+@import "../define"
+@import "../../bower_components/colors/sass/variables"
+
+.modal
+
+  .modal-header
+    background-color: $topbar-background-color
+    color: $white
+
+  .modal-body
+    max-height: 600px
+    overflow-y: auto
+
+  .modal-footer
+    background-color: $background-color
+
+  &.loading
+    p
+      text-align: center
+
+.editor-form
+  .control-label
+    width: 100%
+
+  & + .form-group
+    margin-top: $gap-l
+
+.popup
+  cursor: pointer

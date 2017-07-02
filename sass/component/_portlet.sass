@@ -1,0 +1,66 @@
+@charset "UTF-8"
+
+@import "../../bower_components/colors/sass/variables"
+@import "../define"
+
+.portlet
+
+  + .portlet
+    margin-top: 2em
+
+  &.pit + .portlet
+    margin-top: 0
+
+  .portlet-leading
+    background-color: $silver
+    color: $white
+    padding: 0 15px
+    position: relative
+
+    .more
+      position: absolute
+      top: $gap-s
+      right: $gap-s
+
+    .btn
+      color: $white
+
+      &:hover
+        background-color: rgba(0, 0, 0, .4)
+
+  .portlet-title
+    font-size: 1.15em
+    line-height: 40px
+    margin: 0
+
+  .portlet-body
+    background-color: $white
+    border: 1px solid $silver
+    border-top: none
+    padding: 14px
+    min-height: 100px
+
+    > *:last-child
+      margin-bottom: 0
+
+// colors
+.portlet-green
+  .portlet-leading
+    background-color: $green
+
+  .portlet-body
+    border-color: $green
+
+.portlet-blue
+  .portlet-leading
+    background-color: $blue
+
+  .portlet-body
+    border-color: $blue
+
+.portlet-orange
+  .portlet-leading
+    background-color: $orange
+
+  .portlet-body
+    border-color: $orange

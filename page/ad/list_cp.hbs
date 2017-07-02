@@ -1,0 +1,121 @@
+<div class="table-header">
+  <div class="btn-group add-on-list" data-toggle="buttons" data-key="numbers" data-collection-id="ad" data-container="">
+    <script type="text/x-handlebars-template">
+      {{{{raw-helper}}}}
+        <label class="btn btn-primary {{#equal status ''}}active{{/equal}}">
+          <input type="radio" name="status" value=""> 全部 ({{total}})
+        </label>
+        <label class="btn btn-primary {{#equal status '0'}}active{{/equal}}">
+          <input type="radio" name="status" value="0"> 投放中 ({{online}})
+        </label>
+        <label class="btn btn-primary {{#equal status '1'}}active{{/equal}}">
+          <input type="radio" name="status" value="1"> 已完成 ({{offline}})
+        </label>
+      {{{{/raw-helper}}}}
+    </script>
+  </div>
+</div>
+<table class="table table-bordered table-hover responsive-table smart-table" data-url="{{API}}ad/" data-pagination=".pagination" data-pagesize-controller="#pagesize" data-pagesize="10" data-collection-id="ad" data-defaults="is_ios={{#if is_ios}}1{{/if}}&{{#if has_export}}has_export={{has_export}}{{/if}}" data-filter=".table-header">
+  <thead>
+  <tr>
+    <th class="filters">广告名称</th>
+    <th>投放平台</th>
+    <th><a class="order active inverse" href="#create_time">创建时间</a></th>
+    {{#if is_ios}}
+    <th><a class="order" href="#start_time">开始时间</a></th>
+    <th><a class="order" href="#end_time">结束时间</a></th>
+    {{/if}}
+    <th>状态</th>
+    <th>今日激活数</th>
+    <th>总激活数</th>
+    {{#unless is_ios}}
+    <th>单价</th>
+    <th>支出</th>
+    {{/unless}}
+    <th>操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <script type="text/x-handlebars-template">
+    {{{{raw-helper}}}}
+    <tr class="{{pick ad_app_type '' 'Android' 'iPhone'}} {{pack_name}}" id="{{id}}">
+      <td data-title="广告名称">
+        <a href="#/ad_name/{{ad_name}}" class="label label-ad_name filter">{{ad_name}}</a>
+        {{cid}}
+      </td>
+      <td data-title="投放平台">{{pick ad_app_type '' 'Android' 'iPhone'}}</td>
+      <td data-title="创建时间"><time datetime="{{create_time}}">{{create_time}}</time></td>
+      {{#if is_ios}}
+      <td data-title="开始时间">{{#if start_time}}<time datetime="{{start_time}}">{{start_time}}</time>{{else}}--{{/if}}</td>
+      <td data-title="结束时间">{{#if end_time}}<time datetime="{{end_time}}">{{end_time}}</time>{{else}}--{{/if}}</td>
+      {{/if}}
+      <td data-title="状态">
+        <span class="label status-{{status}}">{{pick status '投放中' '已完成' '待投放'}}</span>
+      </td>
+      <td data-title="今日激活数">{{today_transfer}}</td>
+      <td data-title="总激活数">{{transfer}}</td>
+      {{#unless is_ios}}
+      <td data-title="单价">
+        {{#if income}}
+        {{#if only}}
+        &yen;{{d100 only}}
+        {{else}}
+        &yen;{{d100 min}} ~ &yen;{{d100 max}}
+        {{/if}}
+        {{/if}}
+      </td>
+      <td data-title="支出">&yen;{{d100 income}}</td>
+      {{/unless}}
+      <td data-title="操作">
+        <a class="btn btn-info" title="分日统计" href="#/stat/{{id}}"><i class="fa fa-line-chart"></i> 分日统计</a>
+        {{#if has_export}}
+        <a href="page/ad/export-idfa_cp.hbs" class="btn btn-primary popup" title="导出数据" data-id="{{id}}" data-confirm="导出CSV" data-popup="tp.page.DateRange" data-collection-id="ad" data-type="{{#if has_api}}3{{else}}0{{/if}}"><i class="fa fa-download"></i> 导出数据</a>
+        {{/if}}
+      </td>
+    </tr>
+    {{{{/raw-helper}}}}
+  </script>
+  </tbody>
+  <tfoot class="waiting">
+  <tr>
+    <td colspan="10"><p align="center"><i class="fa fa-spinner fa-spin fa-2x"></i><br>加载中，请稍候</p></td>
+  </tr>
+  </tfoot>
+</table>
+
+
+<script type="text/x-handlebars-template" class="editor-info">
+  {{{{raw-helper}}}}
+  <table class="table table-bordered">
+    <tbody>
+    <tr>
+      <th>广告名称</th>
+      <td>{{ad_name}}</td>
+    </tr>
+    <tr></tr>
+    </tbody>
+  </table>
+  {{{{/raw-helper}}}}
+</script>
+
+<nav class="pull-right table-footer">
+  <ul class="pagination">
+    <script type="text/x-handlebars-template">
+      {{{{raw-helper}}}}
+      <li><a href="#/to/{{prev}}"><i class="fa fa-chevron-left"></i></a></li>
+      {{#each pages}}
+      <li class="hidden-xs"><a href="#/to/{{index}}">{{label}}</a></li>
+      {{/each}}
+      <li><a href="#/to/{{next}}"><i class="fa fa-chevron-right"></i></a></li>
+      {{{{/raw-helper}}}}
+    </script>
+  </ul>
+  <div class="form-group">
+    <label for="pagesize">每页显示：</label>
+    <select class="form-control" id="pagesize">
+      <option selected>10</option>
+      <option>20</option>
+      <option>50</option>
+    </select>
+  </div>
+</nav>

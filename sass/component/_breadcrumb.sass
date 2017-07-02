@@ -1,0 +1,62 @@
+@charset "UTF-8"
+
+@import "../define"
+@import "../../bower_components/colors/sass/variables"
+@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/variables"
+
+.breadcrumb
+  .date-range
+    display: none
+
+    &:before
+      content: ''
+      display: none
+
+    .has-date-range &
+      display: block
+
+    .dropdown
+      margin-top: -8px
+      margin-right: -15px
+
+      > button
+        background: $olive
+        border: none
+        color: $white
+        line-height: 31px
+        text-align: center
+        width: 300px
+
+      .dropdown-menu
+        width: 300px
+
+    .range
+      padding: 0 $gap-l $gap + $gap-s
+
+      label
+        line-height: 2.5em
+        margin-bottom: 0
+
+      .form-control
+        margin-right: -8px
+
+      button
+        margin-top: $gap
+
+  .select-month
+    .shortcut, .divider
+      display: none
+
+@media (max-width: $screen-xs-max)
+  .breadcrumb
+    .date-range
+      .dropdown
+        > button
+          width: auto
+
+        .dropdown-menu
+          position: absolute
+          top: 100%
+          left: auto
+          right: 0
+          width: auto

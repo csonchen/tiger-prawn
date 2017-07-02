@@ -1,0 +1,191 @@
+<div class="row dashboard-stats mt2e">
+  <div class="col-md-3 col-sm-6 dashboard-stat stat-primary">
+    <i class="fa fa-money fa-3x circle-title"></i>
+    <div class="dashboard-stat-content">
+      <h3 class="title">本月营收</h3>
+      <p>&yen; {{readable_n income}}</p>
+    </div>
+    <a class="more">详情 <i class="fa fa-play-circle"></i></a>
+  </div>
+  <div class="col-md-3 col-sm-6 dashboard-stat stat-secondary">
+    <i class="fa fa-cubes fa-3x circle-title"></i>
+    <div class="dashboard-stat-content">
+      <h3 class="title">本月成本</h3>
+      <p>&yen; {{readable_n out}}</p>
+    </div>
+    <a class="more">详情 <i class="fa fa-play-circle"></i></a>
+  </div>
+  <div class="col-md-3 col-sm-6 dashboard-stat stat-tertiary">
+    <i class="fa fa-smile-o fa-3x circle-title"></i>
+    <div class="dashboard-stat-content">
+      <h3 class="title">结算率</h3>
+      <p>{{ratio}}%</p>
+    </div>
+    <a class="more">详情 <i class="fa fa-play-circle"></i></a>
+  </div>
+  <div class="col-md-3 col-sm-6 dashboard-stat stat-quartus">
+    <i class="fa fa-trophy fa-3x circle-title"></i>
+    <div class="dashboard-stat-content">
+      <h3 class="title">利润率</h3>
+      <p>{{profit}}%</p>
+    </div>
+    <a class="more">详情 <i class="fa fa-play-circle"></i></a>
+  </div>
+</div>
+<div class="row mt2e">
+  <div class="col-md-12 col-sm-12">
+    <div class="portlet portlet-green">
+      <div class="portlet-leading">
+        <h4 class="portlet-title"><i class="fa fa-line-chart"></i> 公司营收</h4>
+      </div>
+      <div class="portlet-body">
+        <div class="morris-chart" style="height: 300px">
+          <script type="application/json">
+            {
+              "data": [
+                {{#each corp_transfer}}
+                {
+                  "date": "{{date}}",
+                  "transfer": {{transfer}},
+                  "my_transfer": {{my_transfer}}
+                }{{#unless @last}},{{/unless}}
+                {{/each}}
+              ],
+              "xkey": "date",
+              "ykeys": ["transfer", "my_transfer"],
+              "labels": ["总推广量", "我的广告"]
+            }
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mt2e dashboard-stats">
+  <div class="col-md-4 col-sm-12">
+    <div class="portlet portlet-blue">
+      <div class="portlet-leading">
+        <h4 class="portlet-title"><i class="fa fa-sitemap"></i> 我的CPA占比</h4>
+      </div>
+      <div class="portlet-body">
+        <div class="morris-chart" data-type="donut" style="height: 200px">
+          <script type="application/json">
+            {
+              "data": [
+                {
+                  "label": "全部",
+                  "value": {{corp_stat}}
+                },
+                {
+                  "label": "我的CPA",
+                  "value": {{stat}},
+                  "percent": {{stat_percent}}
+                }
+              ],
+              "ykeys": [],
+              "labels": []
+            }
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 col-sm-12">
+    <div class="portlet portlet-blue">
+      <div class="portlet-leading">
+        <h4 class="portlet-title"><i class="fa fa-sitemap"></i> 我的渠道CPA占比</h4>
+      </div>
+      <div class="portlet-body">
+        <div class="morris-chart" data-type="donut" style="height: 200px">
+          <script type="application/json">
+            {
+              "data": [
+                {
+                  "label": "全部",
+                  "value": {{corp_cpa}}
+                },
+                {
+                  "label": "我的渠道CPA",
+                  "value": {{cpa}},
+                  "percent": {{cpa_percent}}
+                }
+              ],
+              "ykeys": [],
+              "labels": []
+            }
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 col-sm-12">
+    <div class="portlet portlet-blue">
+      <div class="portlet-leading">
+        <h4 class="portlet-title"><i class="fa fa-tasks"></i> 结算回款</h4>
+      </div>
+      <div class="portlet-body">
+        <div class="progress-stat">
+          <div class="stat-header">
+            <div class="stat-label">
+              % 结算率
+            </div>
+            <div class="stat-value">
+              {{ratio}}%
+            </div>
+          </div>
+          <div class="progress">
+            <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="{{ratio}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ratio}}%">
+              <span class="sr-only">结算率：{{ratio}}%</span>
+            </div>
+          </div>
+        </div>
+        <div class="progress-stat">
+          <div class="stat-header">
+            <div class="stat-label">
+              % 已回款
+            </div>
+            <div class="stat-value">
+              {{payment}}%
+            </div>
+          </div>
+          <div class="progress">
+            <div class="progress-bar progress-bar-secondary" role="progressbar" aria-valuenow="{{payment}}" aria-valuemin="0" aria-valuemax="100" style="width: {{payment}}%">
+              <span class="sr-only">已回款：{{payment}}%</span>
+            </div>
+          </div>
+        </div>
+        <div class="progress-stat">
+          <div class="stat-header">
+            <div class="stat-label">
+              % 回款金额比例
+            </div>
+            <div class="stat-value">
+              {{payment_ratio}}%
+            </div>
+          </div>
+          <div class="progress">
+            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{payment_ratio}}" aria-valuemin="0" aria-valuemax="100" style="width: {{payment_ratio}}%">
+              <span class="sr-only">回款金额比例：{{payment_ratio}}%</span>
+            </div>
+          </div>
+        </div>
+        <div class="progress-stat">
+          <div class="stat-header">
+            <div class="stat-label">
+              % 已开票
+            </div>
+            <div class="stat-value">
+              {{invoice}}%
+            </div>
+          </div>
+          <div class="progress">
+            <div class="progress-bar progress-bar-tertiary" role="progressbar" aria-valuenow="{{invoice}}" aria-valuemin="0" aria-valuemax="100" style="width: {{invoice}}%">
+              <span class="sr-only">已开票：{{invoice}}%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>

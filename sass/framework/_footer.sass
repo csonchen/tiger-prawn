@@ -1,0 +1,62 @@
+@charset "UTF-8"
+@import "../define"
+@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/variables"
+@import "compass/css3/opacity"
+
+#footer
+  background-color: $footer-background-color
+  color: #666
+  font-size: 12px
+  line-height: $footer-height
+  height: $footer-height
+  padding: 0 1em
+  position: fixed
+  left: $sidebar-width
+  right: 0
+  bottom: 0
+  z-index: 15
+
+  p
+    margin: 0
+    text-align: center
+
+  a
+    color: #FC7D6F
+
+  .sidebar-collapsed:not(.full-page) &
+    left: $collapsed-sidebar-width
+
+@media (max-width: $screen-xs-max)
+  #footer
+    height: auto
+    position: relative
+    left: 0
+    bottom: 0
+    padding: 0
+    margin-top: -$footer-height
+    line-height: $line-height-base
+
+    p
+      width: 100%
+      padding: 10px
+      position: absolute
+      background-color: $footer-background-color
+
+    .top-button
+      border-radius: 50%
+      box-shadow: 0 0 10px gray
+      background-color: #ffffff
+      @include opacity(0.6)
+      position: fixed
+      bottom: $gap-l
+      right: 5px
+      z-index: 16
+      width: $footer-height
+      height: $footer-height
+      line-height: $footer-height
+      text-overflow: ellipsis
+      overflow: hidden
+      color: $topbar-background-color
+
+      i
+        margin: 0 14px

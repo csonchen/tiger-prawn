@@ -1,0 +1,337 @@
+<div role="tabpanel" class="tabpanel">
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#ad-dashboard" aria-controls="status" role="tab" data-toggle="tab"><i class="fa fa-dashboard"></i> 运行状态</a></li>
+    <li role="presentation"><a href="#base-info" aria-controls="base-info" role="tab" data-toggle="tab"><i class="fa fa-file-text"></i> 基础信息</a></li>
+    <li role="presentation"><a href="#put" aria-controls="put" role="tab" data-toggle="tab"><i class="fa fa-truck"></i> 投放信息</a></li>
+    {{#unless cp}}
+    <li role="presentation"><a href="#channel" aria-controls="channel" role="tab" data-toggle="tab"><i class="fa fa-yen"></i> 渠道信息</a></li>
+    <li role="presentation"><a href="#comment" aria-controls="comment" role="tab" data-toggle="tab"><i class="fa fa-comment"></i> 运营点评</a></li>
+    {{/unless}}
+  </ul>
+
+  <div class="tab-content">
+    <div class="tab-pane active" id="ad-dashboard" role="tabpanel">
+      <table class="table table-bordered table-striped">
+        <tr>
+          <th width="10%">当前状态</th>
+          <td>
+            {{pick status '上线' '下线' '待审批' '待审批' '被拒绝'}}
+            {{#equal status 4}}
+              <h4>原因</h4>
+              <blockquote>{{decline.NAME}}：<br>{{decline.comment}}</blockquote>
+              <a class="edit btn btn-primary" href="#status" data-type="status" data-open="0" data-deactive="" data-active="申请再审" data-comment-name="message">我已查验，修改完毕，再次申请。</a>
+            {{/equal}}
+          </td>
+        </tr>
+        <tr>
+          <th>每日限量</th>
+          <td>{{jobnum}}</td>
+        </tr>
+        <tr>
+          <th>今日余量</th>
+          <td>{{num}}</td>
+        </tr>
+        <tr>
+          <th>今日投放曲线</th>
+          <td>
+            <div class="morris-chart" style="height: 200px">
+              <script type="application/json">
+                {
+                  "data": [
+                    {{#each today_stat}}
+                    {
+                      "hour": "{{hour}}:00:00"
+                      {{#if transfer}},"transfer": {{transfer}}{{/if}}
+                      {{#if click}},"click": {{click}}{{/if}}
+                    }{{#unless @last}},{{/unless}}
+                    {{/each}}
+                  ],
+                  "xkey": "hour",
+                  "ykeys": ["transfer", "click"],
+                  "labels": ["激活数", "点击数"]
+                }
+              </script>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="tab-pane" id="base-info" role="tabpanel">
+      <table class="table table-bordered table-striped">
+        <tr>
+          <th width="10%">所属平台</th>
+          <td>{{pick ad_app_type '' 'Android' 'iOS'}}</td>
+        </tr>
+        <tr>
+          <th>广告名</th>
+          <td><a class="edit" href="#ad_name">{{ad_name}}</a></td>
+        </tr>
+        <tr>
+          <th>广告类型</th>
+          <td><a class="edit" href="#ad_type" data-type="select" data-options="ad_types">{{#pick_with ad_type ad_types}}{{label}}{{/pick_with}}</a></td>
+        </tr>
+        <tr>
+          <th>广告描述</th>
+          <td><a class="edit" href="#ad_desc" data-type="long-text">{{{ad_desc}}}</a></td>
+        </tr>
+        <tr>
+          <th>广告链接</th>
+          <td>
+            {{#if ios}}
+              <a class="edit" href="#ad_url">{{ad_url}}</a>
+            {{else}}
+              <a class="btn btn-default" href="{{ad_url}}" download="{{ad_name}}.{{pick ad_app_type '' 'apk' 'ipa'}}"><i class="fa fa-download"></i> 下载测试</a>
+              <a class="edit btn btn-warning" href="#ad_url" data-type="file" data-accept="*.{{pick ad_app_type '' 'apk' 'ipa'}}" data-comment-name="message"><i class="fa fa-upload"></i> 更换安装包</a>
+              <a class="popup btn btn-info" href="page/ad/popup/upload-history.hbs" data-cancel="关闭" title="安装包上传记录"><i class="fa fa-list"></i> 上传记录</a>
+            {{/if}}
+          </td>
+        </tr>
+        <tr>
+          <th>广告版本</th>
+          <td><a class="edit" href="#ad_lib">{{ad_lib}}</a></td>
+        </tr>
+        <tr>
+          <th>广告大小</th>
+          <td><a class="edit" href="#ad_size">{{ad_size}}</a></td>
+        </tr>
+        {{#unless cp}}
+        {{#if ios}}
+        <tr>
+          <th>广告包名</th>
+          <td>{{pack_name}}</td>
+        </tr>
+        <tr>
+          <th>进程名</th>
+          <td>{{process_name}}</td>
+        </tr>
+        <tr>
+          <th>URL scheme</th>
+          <td>{{url_type}}</td>
+        </tr>
+        <tr>
+          <th>iTunes ID</th>
+          <td>{{itunes_id}}</td>
+        </tr>
+        {{/if}}
+        {{/unless}}
+        <tr>
+          <th>广告LOGO</th>
+          <td>
+            <a class="edit" href="#pic_path" data-type="file" data-accept="image/*">
+              {{#if pic_path}}<img src="{{pic_path}}" class="img-thumbnail">{{/if}}
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <th>广告截图</th>
+          <td>
+            <a class="edit" href="#ad_shoot" data-type="file" data-accept="image/*" data-multiple="true" data-append="true" data-refresh="true" data-removable="true">
+              {{#each ad_shoot}}
+                <img src="{{.}}" class="img-thumbnail">
+              {{/each}}
+            </a>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div  class="tab-pane"id="put" role="tabpanel">
+      <table class="table table-bordered table-striped">
+        <tr>
+          <th width="10%">广告主报价</th>
+          <td><a class="edit" href="#quote_rmb" data-type="number">{{quote_rmb}}</a></td>
+        </tr>
+        {{#equal ad_app_type 1}}
+        <tr>
+          <th>完成条件</th>
+          <td><a class="edit" href="#cate" data-type="select" data-options="cates">{{pick cate cates}}</a></td>
+        </tr>
+        {{else}}
+        <tr>
+          <th>投放类型</th>
+          <th><a class="edit" href="#search_flag" data-type="select" data-list="search_flags">{{pick search_flag '普通' 'ASO - 自动' 'ASO - 手动'}}</a></th>
+        </tr>
+        {{#if search_flag}}
+          <tr>
+            <th>ASO搜索词</th>
+            <td><a class="edit" href="#keywords">{{keywords}}</a></td>
+          </tr>
+        {{/if}}
+        {{/equal}}
+        <tr>
+          <th>投放运营商</th>
+          <td><a class="edit" href="#net_type" data-type="select" data-options="net_types">{{pick net_type net_types}}</a></td>
+        </tr>
+        <tr>
+          <th>投放区域</th>
+          <td>
+            <a class="edit" href="#province_type" data-type="select" data-list="#province_type">{{pick province_type '全国' '分省'}}</a>
+            {{#if province_type}}
+            <hr>
+            <a class="edit" href="#put_provinces" data-type="checkbox" data-options="provinces">{{#each put_provinces}}<span class="label label-info">{{pick . ../provinces }}</span> {{/each}}</a>
+            {{/if}}
+          </td>
+        </tr>
+      </table>
+    </div>
+    {{#unless cp}}
+    <div class="tab-pane" id="channel" role="tabpanel">
+      <table class="table table-bordered table-striped">
+        {{#if sales}}
+        <tr>
+          <th>负责人</th>
+          <td><a href="#owner" class="edit" data-type="select" data-options="sales">{{#pick_with owner sales key="key"}}{{value}}{{/pick_with}}</a></td>
+        </tr>
+        {{/if}}
+        <tr>
+          <th width="10%">关联合同</th>
+          <td>
+            <table class="table">
+              <thead>
+              <tr>
+                <th>合同主体</th>
+                <th>合同编号</th>
+                <th>操作类型</th>
+                <th>生效时间</th>
+                <th>操作人</th>
+                <th>操作时间</th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>{{company}}</td>
+                <td>{{aid}}</td>
+                <td></td>
+                <td>{{substring create_time 0 10}}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              {{#each link_agreements}}
+              <tr>
+                <td>{{company}}</td>
+                <td>{{aid}}</td>
+                <td>{{#if is_correct}}修改关联合同{{else}}添加新的关联合同{{/if}}</td>
+                <td>{{date}}</td>
+                <td>{{admin}}</td>
+                <td>{{create_time}}</td>
+                <td><a href="{{API}}ad/{{ad_id}}/agreement/{{agreement_id}}" class="btn request-button btn-danger" data-method="delete" data-msg="确定不再关联这个合同么？" data-item="tr"><i class="fa fa-times"></i></a></td>
+              </tr>
+              {{/each}}
+              </tbody>
+            </table>
+            <a href="#agreement_id" class="edit btn btn-info" data-type="search" data-url="agreement/" data-item-label="{{{{raw-helper}}}}{{company}}（{{company_short}} {{#if aid}}{{aid}}{{else}}{{agreement_id}}{{/if}}{{{{/raw-helper}}}}）" data-template="ad/popup/agreement-edit"><i class="fa fa-edit"></i> 新增/修改关联合同</a>
+          </td>
+        </tr>
+        {{#unless agreement_id}}
+        <tr>
+          <th>渠道名称</th>
+          <td>{{channel}}</td>
+        </tr>
+        {{/unless}}
+        <tr>
+          <th>渠道号</th>
+          <td><a href="#cid" class="edit">{{cid}}</a></td>
+        </tr>
+        <tr>
+          <th>渠道扣点</th>
+          <td><a href="#ratio" class="edit" data-type="range" data-max="1" data-min="0.01" data-step="0.01">{{ratio}}</a></td>
+        </tr>
+        <tr>
+          <th>数据反馈形式</th>
+          <td><a href="#feedback" class="edit" data-type="select" data-list="#feedback">{{pick feedback '' '截图' '官方后台' '渠道后台' 'API接口' '核对mac地址' '实时数据' '按点乐数据结算'}}</a></td>
+        </tr>
+        {{#equal feedback 2}}
+        <tr>
+          <th>后台地址</th>
+          <td><a href="#url" class="edit">{{url}}</a></td>
+        </tr>
+        <tr>
+          <th>账号</th>
+          <td><a href="#user" class="edit">{{user}}</a></td>
+        </tr>
+        <tr>
+          <th>密码</th>
+          <td><a href="#pwd" class="edit">{{pwd}}</a></td>
+        </tr>
+        {{/equal}}
+        <tr>
+          <th>反馈周期</th>
+          <td><a href="#cycle" class="edit" data-type="select" data-list="#cycle">{{pick cycle '' '隔日数据' '一周两次数据' '隔周数据' '隔月数据'}}</a></td>
+        </tr>
+      </table>
+    </div>
+    <div class="tab-pane" id="comment" role="tabpanel">
+      <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+          <th width="10%">运营</th>
+          <th>点评</th>
+          <th>发表时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each comments}}
+        <tr>
+          <td>{{author}}</td>
+          <td>{{comment}}</td>
+          <td>{{moment create_time}}</td>
+        </tr>
+        {{/each}}
+        </tbody>
+      </table>
+    </div>
+    {{/unless}}
+
+    <div class="alert alert-info">
+      <h4>广告备注</h4>
+      {{#in status '0' '1'}}
+      <p>{{others}}</p>
+      <ul>
+        {{#each cm_others}}
+          <li>{{comment}}；<small class="text-muted"><time datetime="{{create_time}}">{{moment create_time}}</time></small>
+          {{#if status}}<br><span class="text-success fa fa-check">{{reply}} <small class="text-muted">{{handler}} <time datetime="{{solve_time}}">{{moment solve_time}}</time></small></span>{{/if}}<br/>
+        {{/each}}</li>
+      </ul>
+      <a href="#comment" class="edit btn btn-primary btn-sm" data-type="long-text">
+        <i class="fa fa-comment"></i> 添加备注
+      </a>
+      {{else}}
+        <a href="#others" class="edit" data-type="long-text">{{others}}</a>
+      {{/in}}
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-info">
+  <div class="panel-heading">操作广告</div>
+  <div class="panel-body">
+    {{#in status '0' '1'}}
+    <a href="page/ad/export-idfa.hbs" class="btn btn-primary popup" title="导出数据" data-confirm="导出CSV" data-popup="tp.page.DateRange"><i class="fa fa-download"></i> 导出数据</a>
+    {{/in}}
+  </div>
+</div>
+
+<datalist id="province_type">
+  <option value="0">全国</option>
+  <option value="1">分省</option>
+</datalist>
+<datalist id="feedback">
+  <option value="1">截图</option>
+  <option value="2">官方后台</option>
+  <option value="3">渠道后台</option>
+  <option value="4">API接口</option>
+  <option value="5" class="iPhone">核对mac地址</option>
+  <option value="6">实时数据</option>
+  <option value="7">按点乐数据结算</option>
+</datalist>
+<datalist id="cycle">
+  <option value="1">隔日数据</option>
+  <option value="2">一周两次数据</option>
+  <option value="3">隔周数据</option>
+  <option value="4">隔月数据</option>
+</datalist>
+<datalist id="search_flags">
+  <option value="0">普通广告</option>
+  <option value="1">ASO广告</option>
+</datalist>

@@ -1,0 +1,17 @@
+.edit
+  border-bottom: 1px dashed
+
+  &.btn
+    border-bottom: 1px solid transparent
+
+  &:empty:before
+    content: '[edit]'
+
+  &.label
+    border-bottom: none
+
+  &:hover
+    text-decoration: none
+
+  + .edit
+    margin-left: 0.5em

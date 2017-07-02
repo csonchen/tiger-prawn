@@ -1,0 +1,86 @@
+@charset "UTF-8"
+
+@import "../../bower_components/colors/sass/variables"
+@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/variables"
+@import "../define"
+
+#content
+  margin-top: $topbar-height
+  margin-left: $sidebar-width
+  margin-bottom: $footer-height
+  padding: $gap-l
+
+  .page-header
+    margin: 0
+
+    h1
+      margin: 0
+
+  .latest
+    padding-top: $gap + $gap-s
+    text-align: right
+    vertical-align: bottom
+
+    .label
+      font-size: 100%
+      line-height: 1.25
+
+      small
+        font-weight: normal
+
+    .android
+      background-color: $android-color
+      color: $white
+
+    .apple
+      background-color: $black
+      color: $silver
+
+  > .breadcrumb
+    background-color: $silver
+
+  .full-page & .latest
+    display: none
+
+#page-container
+  position: relative
+
+@media (max-width: $screen-xs-max)
+  #content
+    margin: 0
+    padding-bottom: $topbar-height * 2
+    min-height: 100%
+
+.sidebar-collapsed
+  #content
+    margin-left: $collapsed-sidebar-width
+
+  #page-loading
+    left: $collapsed-sidebar-width
+
+#page-loading
+  position: fixed
+  top: $topbar-height
+  left: $sidebar-width
+  right: 0
+  bottom: $footer-height
+  background-color: rgba(0, 0, 0, .6)
+
+  .loading
+    background-color: $white
+    border-radius: 4px
+    font-size: 1.2em
+    line-height: 2.5em
+    width: 200px
+    text-align: center
+    position: absolute
+    top: 45%
+    left: 50%
+    margin-left: -125px
+
+@media (max-width: $screen-xs-max)
+  #page-loading
+    left: 0
+    bottom: 0
+    .loading
+      left: 55%

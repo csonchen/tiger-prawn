@@ -1,0 +1,269 @@
+@charset "UTF-8"
+@import "../../bower_components/colors/sass/variables"
+@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/variables"
+@import "../../bower_components/font-awesome/scss/variables"
+@import "../define"
+
+#navbar-side
+  background-color: $sidebar-background-color
+  color: $white
+  width: $sidebar-width
+  position: fixed
+  top: $topbar-height + 1px
+  left: 0
+  bottom: 0
+  padding: 0
+  z-index: 14
+  overflow: auto !important
+
+  &.view
+    overflow: visible !important
+
+  a
+    color: $navbar-color
+
+    &:hover
+      color: $white
+
+    i
+      width: 20px
+
+.navbar-fixed-top .navbar-collapse
+  max-height: 100%
+
+.side-nav
+  float: none
+  margin: 0
+  padding: 0
+  border-bottom: 1px solid lighten($sidebar-background-color, 5%)
+  background: $sidebar-background-color
+
+  .cp &
+    border-top: 1px solid lighten($sidebar-background-color, 5%)
+
+  > li
+    float: none
+    border-top: 1px solid lighten($sidebar-background-color, 5%)
+    border-bottom: 1px solid darken($sidebar-background-color, 5%)
+
+    &:first-child
+      border-top: none
+
+    & a
+      .eye-edit-button
+        display: none
+
+      .caret
+        float: right
+        margin-top: 10px
+
+      &:hover,
+      &:active,
+      &:focus
+        background: darken($sidebar-background-color, 5%)
+        background: rgba(0, 0, 0, 0.075)
+        color: $white
+
+  .nav
+    background-color: darken($sidebar-background-color, 10%)
+    font-size: 12px
+    line-height: 20px
+
+    a:active,
+    a:focus,
+    a:hover
+      background-color: darken($sidebar-background-color, 5%)
+
+    i
+      text-align: center
+
+  .sub-nav
+    background: #555
+    list-style-type: none
+
+    > li
+      background: none
+      list-style-type: none
+      padding: 0
+
+      > a
+        display: block
+        color: #FFF
+
+        &:hover
+          text-decoration: none
+          background-color: #4d4d4d
+          border-radius: 5px
+
+        i
+          margin-right: .65em
+
+      &.active > a
+        text-decoration: none
+        background-color: #4d4d4d
+        border-radius: 5px
+
+    .divider
+      height: 1px
+      margin: 5px 0
+      overflow: hidden
+      background: #666
+
+.navbar-user
+  padding: 15px
+  border-bottom: 1px solid darken($sidebar-background-color, 5%)
+
+  span
+    font-size: 12px
+    line-height: 18px
+
+  img
+    background-color: $white
+    float: left
+    width: 40px
+    height: 40px
+    margin-right: $gap
+    margin-bottom: $gap
+
+  h4
+    line-height: 40px
+    margin: 0 0 $gap
+
+  label
+    font-size: 12px
+
+  progress
+    width: 100%
+
+.sidebar-btn-group
+  width: $sidebar-width
+  border-top: 1px solid #1A9FE3
+  position: fixed
+  bottom: 0
+
+  .cp &
+    display: none
+
+.sidebar-search
+  .menu-operation
+    display: none
+
+  #menu-search-form
+    display: flex
+
+  .hidden
+    display: block !important
+
+  .search-typing .mismatch
+    display: none !important
+
+.sidebar-collapsed
+  #navbar-side, .sidebar-btn-group
+    width: $collapsed-sidebar-width
+
+  .side-nav > li > a
+    text-align: center
+
+    & > span
+      display: none
+
+  .sidebar-nav-item
+    .nav
+      display: none
+      position: absolute
+      left: 100%
+      top: 1%
+      width: 130px
+
+    .view
+      display: block
+
+  #menu-search-button, #menu-edit-button
+    display: none
+
+  #menu-collapse-button .fa:before
+    content: $fa-var-arrow-right
+
+.sidebar-editing
+  .edit-btn-group
+    display: flex
+
+  .menu-operation
+    display: none
+
+  .sidebar-nav-item a
+    .eye-edit-button
+      display: block
+      float: right
+      border: none
+      background: transparent
+      outline: none
+
+    .caret
+      display: none
+
+  .hidden
+    display: block !important
+
+    & > a .eye-edit-button .fa:before
+      content: $fa-var-eye-slash
+
+#menu-search-form
+  position: relative
+  display: none
+
+  #search-clear-button
+    border: none
+    background: transparent
+    outline: none
+    position: absolute
+    top: $gap
+    right: $gap
+    color: $black
+    cursor: pointer
+
+  #menu-search-input
+    height: $footer-height
+    line-height: $footer-height
+    border-radius: 0
+
+.edit-btn-group
+  display: none
+
+.menu-operation
+  display: flex
+
+.menu-operation, .edit-btn-group
+  button
+    height: $footer-height
+    background-color: $sidebar-background-color
+    border: 0
+    outline: none
+    flex: 1
+
+@media (max-width: $screen-xs-max)
+  #navbar-side
+    margin-top: 0
+    position: relative
+    top: 0
+    width: 100%
+    overflow-y: auto
+
+  .side-nav
+    border-bottom: none
+
+    .navbar-user a
+      padding: 0
+
+    &>li>a .caret
+      margin-right: $gap-p
+
+  .navbar-collapse
+    padding: 0
+
+  .container-fluid > .navbar-collapse
+    margin-right: -$gap-p
+    margin-left: 0
+
+  .sidebar-btn-group
+    display: none

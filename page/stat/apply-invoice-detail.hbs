@@ -1,0 +1,265 @@
+<h3 class="tac">{{#if company}}{{company}}{{else}}{{full_name}}{{/if}}-点乐{{#equal start end}}{{start}}{{else}}{{start}}~{{end}}{{/equal}}结算单及开票申请单</h3>
+<h4 class="tac">
+  <a data-toggle="popover" data-content="{{#each agreement_info}}{{@this}}<br>{{/each}}" data-html="true" data-title="合同信息" id="agreement-number">点乐合同编号：{{agreement_number}}</a>
+</h4>
+
+<table class="table table-bordered table-striped responsive-table" id="ad_table" data-auto-fetch="false" data-typeahead="false">
+  <thead>
+  <tr>
+    <th>推广期间</th>
+    <th>广告名称</th>
+    <th>广告类型</th>
+    <th>渠道号</th>
+    <th>单价（核减前）</th>
+    <th>渠道CPA（核减前）</th>
+    <th>应结算收入（核减前）</th>
+    <th>单价（核减后）</th>
+    <th>渠道CPA（核减后）</th>
+    <th>实际结算收入（核减后）</th>
+    <th>核减比例</th>
+    <th>核减金额</th>
+    <th>备注</th>
+  </tr>
+  </thead>
+  <tbody>
+  {{{{raw-helper}}}}
+  <script type="text/x-handlebars-template">
+    <tr id="{{id}}">
+      {{#if amount}}
+        <td>合计人民币（大写）：</td>
+        <td id="rmb" colspan="8">{{rmb}}</td>
+        <td id="income-total" colspan="4">&yen; {{readable_n income_after_total}}</td>
+      {{else}}
+        <td data-title="推广期间">{{quote_start_date}} ~ {{quote_end_date}}</td>
+        <td data-title="广告名称">{{ad_name}}</td>
+        <td data-title="广告类型">{{pick ad_app_type ad_app_types}}</td>
+        <td data-title="渠道号">{{cid}}</td>
+        <td data-title="单价（核减前）" class="price">{{readable_n quote_rmb}}</td>
+        <td data-title="渠道CPA（核减前）" class="cpa-before">{{cpa}}</td>
+        <td data-title="应结算收入（核减前）" class="income-before">&yen; {{readable_n income}}</td>
+        <td data-title="单价（核减后）">
+          <a href="#quote_rmb_after" data-step="0.01" class="edit" title="单价（核减后）" data-type="number">{{readable_n quote_rmb_after}}</a>
+        </td>
+        <td data-title="渠道CPA（核减后）">
+          <a href="#cpa_after" class="edit" title="渠道CPA（核减后）" data-type="number">{{cpa_after}}</a>
+          <p class="warning-info">{{pick cut_type cut_types}}</p>
+        </td>
+        <td data-title="实际结算收入（核减后）" class="income-after">&yen; {{readable_n income_after}}</td>
+        <td data-title="核减比例" class="proportion">{{readable_n rate}}%</td>
+        <td data-title="核减金额" class="amount">&yen; {{readable_n money_cut}}</td>
+        <td data-title="备注">
+          <a href="#remark" data-type="long-text" class="edit" title="备注">{{remark}}</a>
+        </td>
+      {{/if}}
+    </tr>
+  </script>
+  {{{{/raw-helper}}}}
+  </tbody>
+</table>
+{{#if ad_notice}}
+  <table class="table table-bordered table-striped responsive-table">
+    <thead>
+    <tr class="warning-info">
+      <th>广告名称</th>
+      <th>提醒信息</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each ad_notice}}
+      <tr>
+        <td data-title="广告名称">{{ad_name}} {{cid}}</td>
+        <td data-title="提醒信息">
+          {{#each notice}}{{#if @last}}{{date}}的渠道cpa为0。{{else}}{{date}}、{{/if}}{{/each}}
+          {{#each left_transfer_notice}}{{#if @last}}{{date}}有余量未确认。{{else}}{{date}}、{{/if}}{{/each}}
+        </td>
+      </tr>
+    {{/each}}
+    </tbody>
+  </table>
+{{/if}}
+
+<form class="form-horizontal clearfix model-editor" method="post" enctype="multipart/form-data" data-target="invoiceDetail">
+  <div class="row">
+    <div class="col-sm-6 col-xs-12">
+      <div class="form-group">
+        <div class="col-sm-12">
+          <h3>付款方</h3>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-4 control-label">付款方：</label>
+        <div class="col-sm-8">
+          <input class="form-control" name="header" type="text" value="{{#if company}}{{company}}{{else}}{{full_name}}{{/if}}" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-4 control-label">发票抬头：</label>
+        <div class="col-sm-8">
+          <p class="form-control-static header">{{#if company}}{{company}}{{else}}{{full_name}}{{/if}}</p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-4 control-label">发票类型：</label>
+        <div class="col-sm-8">
+          <select class="form-control" name="type">
+            <option value="1" {{#equal type 1}}selected{{/equal}}>增值税专用发票</option>
+            <option value="0" {{#equal type 0}}selected{{/equal}}>增值税普通发票</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-4 control-label">发票内容：</label>
+        <div class="col-sm-8">
+          <select class="form-control" name="content_type">
+            <option value="0" {{#equal content_type 0}}selected{{/equal}}>信息服务费</option>
+            <option value="1" {{#equal content_type 1}}selected{{/equal}}>信息技术服务费</option>
+            <option value="2" {{#equal content_type 2}}selected{{/equal}}>技术服务费</option>
+            <option value="3" {{#equal content_type 3}}selected{{/equal}}>广告服务费（慎用）</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <input type="hidden" value="{{kind}}" name="kind">
+        <label class="control-label col-sm-4">规格型号：</label>
+        {{#in kind 0 2}}
+          <div class="col-sm-4"><p class="form-control-static">android</p></div>
+        {{/in}}
+        {{#in kind 1 2}}
+          <div class="col-sm-4"><p class="form-control-static">iOS</p></div>
+        {{/in}}
+      </div>
+      <div class="form-group">
+        <label class="col-sm-4 control-label">开票金额：</label>
+        {{#in kind 0 2}}
+          <div class="col-sm-4">
+            <p class="form-control-static">&yen;<span id="ad_income">{{readable_n ad_income}}</span></p>
+          </div>
+        {{/in}}
+        {{#in kind 1 2}}
+        <div class="col-sm-4">
+          <p class="form-control-static">&yen;<span id="ios_income">{{readable_n ios_income}}</span></p>
+        </div>
+        {{/in}}
+      </div>
+      <div class="form-group">
+        <label class="col-sm-4 control-label">业务负责人：</label>
+        <div class="col-sm-8">
+          <input type="text" name="pay_charger" class="form-control" value="{{pay_charger}}" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-4 control-label">手机号码：</label>
+        <div class="col-sm-8">
+          <input type="text" name="pay_telephone" class="form-control" value="{{pay_telephone}}" pattern="\d+[-]*\d+" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-4 control-label">地址：</label>
+        <div class="col-sm-8">
+          <input type="text" name="pay_address" class="form-control" value="{{pay_address}}" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-4 control-label">日期：</label>
+        <div class="col-sm-8">
+          <p class="form-control-static">{{apply_time}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-xs-12">
+      <div class="form-group">
+        <div class="col-sm-12">
+          <h3>收款方</h3>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-4 control-label">收款方：</label>
+        <div class="col-sm-8"><p class="form-control-static">北京无限点乐科技有限公司</p></div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-4 control-label">开户名称：</label>
+        <div class="col-sm-8"><p class="form-control-static">北京无限点乐科技有限公司</p></div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-4 control-label">开户银行：</label>
+        <div class="col-sm-8"><p class="form-control-static">招商银行北京双榆树支行</p></div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-4 control-label">开户账号：</label>
+        <div class="col-sm-8"><p class="form-control-static">110909024210401</p></div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-4">商务业务线：</label>
+        <div class="col-sm-8">
+          <select name="sub_status" class="form-control sub-status">
+            {{#each sub_statuses}}
+              <option value="{{@key}}" {{#equal ../sub_status @key}}selected{{/equal}}>{{.}}</option>
+            {{/each}}
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-4 control-label">商务执行人：</label>
+        <div class="col-sm-8">
+        {{#if is_assistant}}
+          <select name="charger" class="form-control charger">
+          {{#each chargers}}
+            <option value="{{key}}" data-index="{{@index}}">{{value}}</option>
+          {{/each}}
+          </select>
+          {{else}}
+          <p class="form-control-static">{{applicant}}</p>
+        {{/if}}
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-4 control-label">手机号码：</label>
+        <div class="col-sm-8">
+        <input type="text" name="accept_telephone" class="form-control" value="{{accept_telephone}}" pattern="\d+[-]*\d+">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-4 control-label">地址：</label>
+        <div class="col-sm-8">
+        <input type="text" name="accept_address" class="form-control" value="{{accept_address}}">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-4 control-label">日期：</label>
+        <div class="col-sm-8">
+        <p class="form-control-static">{{apply_time}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group col-sm-12">
+    <label class="col-sm-2 control-label">上传文件：</label>
+    <div class="uploader col-sm-10 invoice-margin" data-url="{{API}}file/" data-need-validate="true" data-accept="*.pdf,*jpg,*png,*doc,*docx,*xls,*xlsx,*zip,*rar" data-multiple="true" data-append="true">
+      <div class="su-placeholder su-removable" data-initial="请上传文件。" data-progress="上传文件中..">
+        {{#if attachment}}
+          <div class="su-item">
+            <a><img src="//dev.dianjoy.com/{{attachment}}"></a>
+          </div>
+        {{/if}}
+      </div>
+      <label class="btn btn-info su-upload-button col-sm-12">
+        <i class="fa fa-upload"></i> 选择文件
+      </label>
+      <input type="hidden" name="attachment" class="su-url form-control">
+    </div>
+  </div>
+  <div class="form-group col-sm-12">
+    <label class="col-sm-2 control-label">特批：</label>
+    <div class="col-sm-10">
+      <textarea class="form-control" rows="6" name="comment" maxlength="1024">{{comment}}</textarea>
+    </div>
+  </div>
+  <div class="form-group col-sm-12">
+    <div class="col-sm-10 col-sm-offset-2">
+      <button class="btn btn-lg btn-block btn-primary">
+        <i class="fa fa-save"></i>提交
+      </button>
+    </div>
+  </div>
+  <input type="hidden" name="agreement_number" value="{{agreement_number}}">
+</form>

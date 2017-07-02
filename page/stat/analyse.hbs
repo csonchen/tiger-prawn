@@ -1,0 +1,221 @@
+<div class="form-inline table-header">
+  <div class="form-group mr2e">
+    <label for="search-query">搜索：</label>
+    <input type="search" class="form-control" id="search-query">
+  </div>
+  <div class="form-group mr2e">
+    <label for="ad_app_type">广告平台：</label>
+    <select class="form-control" name="ad_app_type" id="ad_app_type">
+      <option value="">总和</option>
+      <option value="1">Android</option>
+      <option value="2">IOS</option>
+    </select>
+  </div>
+  <div class="btn-group pull-right">
+    <a href="{{API}}stat/export_payment/" class="btn btn-primary export-button" target="_blank"><i class="fa fa-download"></i>导出回款信息</a>
+  </div>
+</div>
+
+<table class="table table-bordered table-striped responsive-table add-on-list" data-collection-id="admin-list" data-key="amount">
+  <thead>
+  <tr>
+    <th></th>
+    <th>总包数</th>
+    <th>总CPA</th>
+    <th>总渠道CPA</th>
+    <th>结算率</th>
+    <th>推广支出</th>
+    <th>其他支出</th>
+    <th>总支出</th>
+    <th>总收入</th>
+    <th>CPA单价</th>
+    <th>毛利润</th>
+    <th>毛利润率</th>
+  </tr>
+  </thead>
+  <tbody>
+  <script type="text/x-handlebars-template">
+    {{{{raw-helper}}}}
+    {{#if amount}}
+      {{#with amount}}
+      <tr>
+        <td>{{#if is_all}}我的{{else}}筛选{{/if}}</td>
+        <td data-title="总包数">{{readable_n count}}</td>
+        <td data-title="总CPA">{{readable_n transfer}}</td>
+        <td data-title="总渠道CPA">{{readable_n cpa}}</td>
+        <td data-title="结算率">{{d100 transfer_ratio}}%</td>
+        <td data-title="推广支出">&yen;{{d100 out}}</td>
+        <td data-title="其他支出">&yen;{{d100 operation_cost}}</td>
+        <td data-title="总支出">&yen;{{d100 total_cost}}</td>
+        <td data-title="总收入">&yen;{{d100 income}}</td>
+        <td data-title="CPA单价">&yen;{{d100 average_rmb}}</td>
+        <td data-title="毛利润">&yen;{{d100 profit}}</td>
+        <td data-title="毛利润率">{{d100 profit_ratio}}%</td>
+      </tr>
+      {{/with}}
+    {{/if}}
+    <tr>
+      <td>全公司</td>
+      <td data-title="总包数">{{readable_n count}}</td>
+      <td data-title="总CPA">{{readable_n transfer}}</td>
+      <td data-title="总渠道CPA">{{readable_n cpa}}</td>
+      <td data-title="结算率">{{d100 transfer_ratio}}%</td>
+      <td data-title="推广支出">&yen;{{d100 out}}</td>
+      <td data-title="其他支出">&yen;{{d100 operation_cost}}</td>
+      <td data-title="总支出">&yen;{{d100 total_cost}}</td>
+      <td data-title="总收入">&yen;{{d100 income}}</td>
+      <td data-title="CPA单价">&yen;{{d100 average_rmb}}</td>
+      <td data-title="毛利润">&yen;{{d100 profit}}</td>
+      <td data-title="毛利润率">{{d100 profit_ratio}}%</td>
+    </tr>
+    <tr>
+      <td colspan="12" class="tar"><small>缓存更新时间：<time>{{from-now created_time php=1}}</time></small></td>
+    </tr>
+    {{{{/raw-helper}}}}
+  </script>
+  </tbody>
+  <tfoot class="waiting">
+    <tr>
+      <td colspan="12">
+        <p align="center"><i class="fa fa-spin fa-spinner fa-2x"></i><br>加载中，请稍候</p>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+
+<table class="smart-table table table-bordered table-hover responsive-table" data-search="#search-query" data-filter=".table-header"  data-url="{{API}}stat/analyse/" data-pagination=".pagination" data-pagesize-controller="#pagesize" data-pagesize="20" data-ranger=".date-range" data-start="{{start}}" data-end="{{end}}" data-collection-id="admin-list" data-model="tp.model.AnalyseModel" data-id-attribute="ad_id" data-export-button=".export-button">
+  <thead>
+    <tr>
+      <th class="filters">管理名</th>
+      <th>上线时间</th>
+      <th>状态</th>
+      <th>收入</th>
+      <th><a class="order" href="#transfer">CPA</a></th>
+      <th><a class="order" href="#cpa">渠道CPA</a></th>
+      <th>单价/元</th>
+      <th><a class="order" href="#real">实际价格</a></th>
+      <th><a class="order" href="#profit">毛利润</a></th>
+      <th><a class="order" href="#profit_radio">毛利润率</a></th>
+      <th>结算率</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <script type="text/x-handlebars-template">
+      {{{{raw-helper}}}}
+      <tr id="{{ad_id}}" class="{{pick ad_app_type '' 'Android' 'iPhone'}}">
+        <td data-title="管理名">
+          {{#if channel}}<a href="#/channel/{{channel}}" class="filter label label-channel">{{channel}}</a>{{/if}}
+          <a href="#/ad_name/{{ad_name}}" class="filter label label-ad_name">{{ad_name}}</a>
+          {{cid}}
+        </td>
+        <td data-title="上线时间">{{substring create_time 5 5}}</td>
+        <td data-title="状态">
+          <span class="label status-{{status}}">
+            {{pick status 'ON' 'OFF'}}
+          </span>
+          <i class="fa fa-{{pick ad_app_type '' 'android' 'apple'}} platform"></i>
+        </td>
+        <td data-title="收入">&yen;{{d100 income}}</td>
+        <td data-title="CPA">
+          {{readable_n transfer}}
+          {{#equal cpc_cpa "cpc"}}
+            <hr/>cpc: {{readable_n click}}
+          {{/equal}}
+        </td>
+        <td data-title="渠道CPA">
+          {{readable_n cpa}}
+          {{#equal cpc_cpa "cpc"}}
+            <hr/>渠道cpc: {{readable_n cpc}}
+          {{/equal}}
+        </td>
+        <td data-title="单价/元">
+          {{#with quote_rmb}}
+          {{#if only}}
+          &yen;{{d100 only}}
+          {{else}}
+          &yen;{{d100 min}} ~ &yen;{{d100 max}}
+          {{/if}}
+          {{/with}}
+          {{#equal cpc_cpa "cpc"}}
+            <hr/>
+            {{#with cpc_quote}}
+              {{#if only}}
+                &yen;{{d100 only}}
+              {{else}}
+                &yen;{{d100 min}} ~ &yen;{{d100 max}}
+              {{/if}}
+            {{/with}}
+          {{/equal}}
+        </td>
+        <td data-title="实际价格">&yen;{{d100 real_price}}</td>
+        <td data-title="毛利润">&yen;{{d100 profit}}</td>
+        <td data-title="毛利润率">{{d100 profit_ratio}}%</td>
+        <td data-title="结算率">{{d100 ratio}}%</td>
+        <td data-title="操作">
+          <div class="btn-group"  style="position:static">
+            <a href="#/stat/analyse/daily/{{ad_id}}/{{start}}/{{end}}" class="btn btn-default" title="多日详情">
+              <i class="fa fa-list"></i>
+            </a>
+            {{#unless is_invoice}}
+              {{#unless is_selected}}
+                {{#if agreement_id}}
+                  {{#if is_check}}
+                  <a class="btn btn-info popup" href="page/stat/apply-choose-ad.hbs" title="发票申请-{{#if company}}{{company}}{{else}}{{full_name}}{{/if}}" data-id="{{ad_id}}" data-collection-id="admin-list" data-confirm="确定" data-popup="tp.page.AdDateRanger">
+                    <i class="fa fa-file-text"></i>
+                  </a>
+                {{else}}
+                  <button class="btn btn-info" data-toggle="popover" data-content="{{#each noChecks}}{{.}}{{/each}}未对账，请联系结算组核对！" style="background-color:#999; border-color:#7B7B7B;">
+                  <span class="fa-stack" style="width:1em; height:1em; line-height:1em">
+                    <i class="fa fa-file-text"></i>
+                    <i class="fa fa-ban fa-stack-2x" style="top:-7px; left:-5px; color:#FF4136"></i>
+                  </span>
+                  </button>
+                {{/if}}
+              {{else}}
+                <button class="btn btn-info" data-toggle="popover" data-content="合同未录入，无编号，请通过邮件将合同客户全称和客户类型发给邱咏霞申请合同备案，获取合同编号" style="background-color:#999; border-color:#7B7B7B;">
+                  <span class="fa-stack" style="width:1em; height:1em; line-height:1em">
+                    <i class="fa fa-file-text"></i>
+                    <i class="fa fa-ban fa-stack-2x" style="top:-7px; left:-5px; color:#FF4136"></i>
+                  </span>
+                </button>
+              {{/if}}
+              {{/unless}}
+            {{/unless}}
+          </div>
+        </td>
+      </tr>
+      {{{{/raw-helper}}}}
+    </script>
+  </tbody>
+
+  <tfoot class="waiting">
+    <tr>
+      <td colspan="12">
+        <p align="center"><i class="fa fa-spin fa-spinner fa-2x"></i><br>加载中，请稍候</p>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+
+<nav class="pull-right table-footer">
+  <ul class="pagination">
+    <script type="text/x-handlebars-template">
+      {{{{raw-helper}}}}
+      <li><a href="#/to/{{prev}}"><i class="fa fa-chevron-left"></i></a></li>
+      {{#each pages}}
+        <li class="hidden-xs"><a href="#/to/{{index}}">{{label}}</a></li>
+      {{/each}}
+      <li><a href="#/to/{{next}}"><i class="fa fa-chevron-right"></i></a></li>
+      {{{{/raw-helper}}}}
+    </script>
+  </ul>
+  <div class="form-group">
+    <label for="pagesize">每页显示：</label>
+    <select class="form-control" id="pagesize">
+      <option>10</option>
+      <option selected>20</option>
+      <option>50</option>
+    </select>
+  </div>
+</nav>

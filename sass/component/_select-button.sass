@@ -1,0 +1,104 @@
+@charset "UTF-8"
+
+@import "../define"
+@import "../../bower_components/colors/sass/variables"
+@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/variables"
+@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/mixins"
+@import "../../bower_components/font-awesome/scss/variables"
+
+.select-button
+  input[type=radio],
+  input[type=checkbox]
+    display: none
+
+    + label
+      display: inline-block
+      margin-bottom: $gap-s
+      font-weight: $btn-font-weight
+      text-align: center
+      vertical-align: middle
+      touch-action: manipulation
+      cursor: pointer
+      background-image: none
+      border: 1px solid transparent
+      white-space: nowrap
+      @include button-size($padding-base-vertical, $padding-base-horizontal, $font-size-base, $line-height-base, $border-radius-base)
+      @include user-select(none)
+      @include button-variant($btn-default-color, $btn-default-bg, $btn-default-border)
+
+      &,
+      &:active,
+      &.active
+        &:focus,
+        &.focus
+          @include tab-focus
+
+      &:hover,
+      &:focus,
+      &.focus
+        color: $btn-default-color
+        text-decoration: none
+
+      &:active,
+      &.active
+        outline: 0
+        background-image: none
+        @include box-shadow(inset 0 3px 5px rgba(0,0,0,.125))
+
+      &.disabled,
+      &[disabled],
+      fieldset[disabled] &
+        cursor: $cursor-disabled
+        pointer-events: none
+        @include opacity(.65)
+        @include box-shadow(none)
+
+    &:checked + label
+      @include button-variant($btn-success-color, $btn-success-bg, $btn-success-border)
+      padding-left: 25px
+      position: relative
+
+      &:before
+        content: $fa-var-check
+        font-family: 'FontAwesome'
+        position: absolute
+        top: 6px
+        left: 8px
+
+.select-button-group
+  display: flex
+  flex-direction: row
+  flex-wrap: wrap
+
+  label
+    min-width: 100px
+    order: 2
+    margin: 0 $gap-s $gap-s 0
+
+  hr
+    border-top: 2px solid $silver
+    order: 1
+    display: none
+    margin: 0 0 $gap-s
+
+  input[type=radio]:checked,
+  input[type=checkbox]:checked
+
+    + label
+      order: 0
+
+    ~ hr
+      display: block
+      width: 100%
+
+  &.col-5
+    margin: 0 -0.5%
+
+    label
+      width: 19%
+      margin: 0 0.5% $gap-s
+      max-width: 20%
+      min-width: 19%
+
+    hr
+      margin: 0 0.5% $gap-s

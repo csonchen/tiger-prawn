@@ -1,0 +1,15 @@
+# IDE
+.idea
+
+# repo
+bower_components
+node_modules
+
+# build
+**/.sass-cache
+**/*.css
+**/*.map
+index.html
+index.tmp.html
+manifest.appcache
+js/bundle.*

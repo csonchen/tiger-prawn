@@ -1,0 +1,49 @@
+<h4>搜索并关联合同</h4>
+<div class="form-group select-button">
+  {{#if (lookup @root list)}}
+    {{#each (lookup @root list)}}
+      <input type="{{#if ../multiple}}checkbox{{else}}radio{{/if}}" id="curr-{{id}}" name="{{../prop}}" value="{{id}}" checked><label for="curr-{{id}}">{{> item}}</label>
+    {{/each}}
+  {{else if value}}
+    <input type="{{#if multiple}}checkbox{{else}}radio{{/if}}" id="curr-{{value}}" name="{{prop}}" value="{{value}}" checked><label for="curr-{{value}}">{{> item}}</label>
+  {{/if}}
+</div>
+<div class="form-group">
+  <label for="editor-popup-input">{{label}}</label>
+  <label for="editor-popup-search">请输入关键词：</label>
+  <div class="input-group">
+    <input type="search" class="form-control" id="editor-popup-search" autofocus>
+    <span class="input-group-btn">
+      <button type="button" class="btn btn-default search-button"><i class="fa fa-search"></i></button>
+    </span>
+  </div>
+</div>
+<div class="form-group search-result select-button">
+  <script type="text/x-handlebars-template">
+  {{{{raw-helper}}}}
+  <input type="{{#if multiple}}checkbox{{else}}radio{{/if}}" id="prop-{{id}}" name="{{prop}}" value="{{id}}"><label for="prop-{{id}}">{{> item}}</label>
+  {{{{/raw-helper}}}}
+  </script>
+</div>
+<hr>
+<h4>其它信息</h4>
+<div class="form-group select-button">
+  <input type="radio" name="is_correct" value="1" id="is_correct_1" data-toggle-class="hide" data-target=".add-new-agreement" data-group="agreement" checked>
+  <label for="is_correct_1">修改关联合同</label>
+  <input type="radio" name="is_correct" value="" id="is_correct_0" data-toggle-class="" data-target=".add-new-agreement" data-group="agreement">
+  <label for="is_correct_0">新建关联合同</label>
+</div>
+<div class="form-group add-new-agreement hide">
+  <label for="date">生效时间</label>
+  <div class="input-group">
+    <input type="date" name="date" class="form-control datetimepicker" id="date" value="{{to_date}}" data-format="YYYY-MM-DD" data-widget-parent=".modal-dialog">
+    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+  </div>
+</div>
+<div class="form-group add-new-agreement hide">
+  <label for="agreement_comment">备注</label>
+  <textarea name="agreement_comment" id="agreement_comment" rows="2" class="form-control"></textarea>
+</div>
+<p class="alert alert-info">
+  2016年6月1日后，广告可以与多个合同建立关联，以应对广告主变更主体。如果当前广告关联到错误合同，需要修改，请选中“修改关联合同”。否则，请选中“新增关联合同”，这样不会修改当前关联的合同，而是关联更多合同。“生效日期”和“备注”请酌情填写，修改时可留空。谢谢。
+</p>

@@ -1,0 +1,463 @@
+<form class="form-horizontal model-editor Android offer" method="post" enctype="multipart/form-data" id="ad-editor" data-target="ad">
+  <input type="hidden" name="id" value="">
+  <input type="hidden" name="pack_md5" value="">
+  <input type="hidden" name="salt" value="{{salt}}" >
+  <fieldset>
+    <a name="pack"></a>
+    <legend>请先上传安装包，或填入抓取链接</legend>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="ad_url">广告链接</label>
+      <div class="col-sm-6 col-md-5 uploader fetcher" data-url="{{API}}file/" data-need-validate="true" data-accept="*.apk" id="app-uploader" data-name="ad_url">
+        <ul class="nav nav-tabs su-tabs">
+          <li role="presentation" class="active"><a href="#su-uploader" aria-controls="su-uploader" role="tab" data-toggle="tab"><i class="fa fa-upload"></i> 上传安装包</a></li>
+          <li role="presentation"><a href="#su-fetcher" aria-controls="su-fetcher" role="tab" data-toggle="tab"><i class="fa fa-link"></i> 用网址抓取</a></li>
+        </ul>
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="su-uploader">
+            <div class="su-placeholder" data-initial="请上传文件。" data-progress="上传文件中..">
+              {{#if ad_url}}
+                <div class="su-item">
+                  <a href="{{UPLOAD}}{{ad_url}}" download="{{ad_name}}.apk">文件链接</a>
+                </div>
+              {{/if}}
+            </div>
+            <label class="btn btn-info btn-block su-upload-button">
+              <i class="fa fa-upload"></i> 选择安装包并上传
+            </label>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="su-fetcher">
+            <label for="ad_url" class="control-label">请填入欲抓取的链接：</label>
+            <input name="ad_url" value="{{ad_url}}" class="su-url form-control" id="ad_url">
+            <button type="button" class="btn btn-block btn-info fetch-button su-fetch-button" disabled><i class="fa fa-cloud-download"></i> 抓取</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="replace-ad">替换广告</label>
+      <div class="col-sm-1">
+        <input type="checkbox" name="replace" value="1" id="replace-ad" class="switch">
+        <label for="replace-ad"></label>
+      </div>
+      <div class="col-sm-5">
+        <select name="replace-with" disabled class="form-control ad-source-list"></select>
+      </div>
+      <div class="col-sm-1">
+        <label class="control-label">上线时间</label>
+      </div>
+      <div class="col-sm-3">
+        <div class="input-group" id="replace-time">
+          <input type="datetime" name="replace-time" class="form-control date" id="replace-time" disabled>
+          <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+        </div>
+      </div>
+      <p class="help-block col-sm-offset-2 col-sm-10">
+        将选中的广告下线，并新建广告替换之。
+      </p>
+    </div>
+  </fieldset>
+  <fieldset class="collapsible">
+    <a name="basic-info"></a>
+    <legend>基础信息</legend>
+    <div class="alert alert-info col-sm-offset-2">
+      此区块通常不用手工填写，上传安装包之后会自动填充。
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">所属平台</label>
+      <div class="col-sm-10 platform select-button">
+        <input type="radio" name="ad_app_type" value="1" id="platform-android">
+        <label for="platform-android" class="btn btn-primary">
+          <i class="fa fa-android"></i> Android
+        </label>
+        <input type="radio" name="ad_app_type" value="2" id="platform-ios">
+        <label for="platform-ios" class="btn btn-primary">
+          <i class="fa fa-apple"></i> iPhone
+        </label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="ad_name">广告名</label>
+      <div class="col-sm-6">
+        <input type="text" name="ad_name" id="ad_name" value="{{ad_name}}" class="form-control" required />
+        <p class="help-block iPhone">积分墙中的显示名称</p>
+      </div>
+      <div class="col-sm-4">
+        <div class="btn-group">
+          <button type="button" class="btn btn-info search-ad-button" disabled><i class="fa fa-search"></i> 搜索广告</button>
+          <button type="button" class="btn btn-info" title="帮助" data-content="有些广告解析包名有问题，这时你可以输入广告名称进行搜索，获取数据。" data-toggle="popover" data-placement="top"><i class="fa fa-question-circle"></i></button>
+        </div>
+      </div>
+    </div>
+    <div class="form-group ad-list-container" style="display: none;">
+      <label class="col-sm-2 control-label">广告信息来源</label>
+      <div class="col-sm-6">
+        <select class="form-control ad-source-list"></select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="ad_type">广告类型</label>
+      <div class="col-sm-10">
+        <select name="ad_type" id="ad_type" class="form-control" required>
+          <option value="">无分类</option>
+          {{#each ad_types}}
+          <option value="{{id}}">{{label}}</option>
+          {{/each}}
+        </select>
+      </div>
+    </div>
+    <div class="form-group app">
+      <label class="col-sm-2 control-label" for="ad_desc">广告描述</label>
+      <div class="col-sm-10">
+        <textarea class="form-control" rows="6" name="ad_desc" id="ad_desc" maxlength="1024" required>{{ad_desc}}</textarea>
+      </div>
+    </div>
+    <div class="form-group app">
+      <label class="col-sm-2 control-label" for="ad_lib">广告版本</label>
+      <div class="col-sm-10">
+        <input name="ad_lib" id="ad_lib" value="{{ad_lib}}" class="form-control" />
+      </div>
+    </div>
+    <div class="form-group app">
+      <label class="col-sm-2 control-label" for="ad_size">广告大小</label>
+      <div class="col-sm-10">
+        <input name="ad_size" id="ad_size" value="{{ad_size}}" class="form-control" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="pack_name">广告包名</label>
+      <div class="col-sm-10">
+        <input name="pack_name" id="pack_name" value="{{pack_name}}" class="form-control" readonly />
+      </div>
+    </div>
+    <div class="form-group iPhone">
+      <label class="col-sm-2 control-label" for="process_name">进程名</label>
+      <div class="col-sm-10">
+        <input name="process_name" id="process_name" value="{{process_name}}" class="form-control"/>
+      </div>
+    </div>
+    <div class="form-group iPhone">
+      <label class="col-sm-2 control-label" for="url_type">URL scheme</label>
+      <div class="col-sm-10">
+        <input name="url_type" id="url_type" value="{{url_type}}" class="form-control" readonly>
+      </div>
+    </div>
+    <div class="form-group iPhone">
+      <label class="col-sm-2 control-label" for="itunes_id">iTunes ID</label>
+      <div class="col-sm-10">
+        <input name="itunes_id" id="itunes_id" value="" class="form-control">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="pic_path">广告LOGO</label>
+      <div class="col-sm-6 uploader" data-url="{{API}}file/" data-accept="image/*" data-name="pic_path">
+        {{#if pic_path}}
+          <div class="su-item">
+            <img src="{{UPLOAD}}{{pic_path}}" class="img-thumbnail">
+          </div>
+        {{else}}
+        <div class="su-placeholder" data-initial="请上传PNG文件，尺寸128x128。" data-progress="上传图片中.."></div>
+        {{/if}}
+        <label class="btn btn-info btn-block su-upload-button">
+          <i class="fa fa-image"></i> 选择图标并上传
+        </label>
+        <input type="hidden" name="pic_path" value="{{pic_path}}" class="su-url">
+      </div>
+    </div>
+    <div class="form-group Android">
+      <label class="col-sm-2 control-label" for="ad_shoot">广告截图</label>
+      <div class="col-sm-6 uploader" data-url="{{API}}file/" data-accept="image/*" data-name="ad_shoot" data-multiple="true" data-append="true">
+        {{#if shoots}}
+          {{#each shoots}}
+            <div class="su-item">
+              <img src="{{../UPLOAD}}{{.}}" class="img-thumbnail">
+            </div>
+          {{/each}}
+        {{else}}
+        <div class="su-placeholder su-grid col-2 su-removable" data-initial="请上传两张JPG文件，尺寸480x800。" data-progress="上传文件中.."></div>
+        {{/if}}
+        <label class="btn btn-info btn-block su-upload-button">
+          <i class="fa fa-image"></i> 选择广告截图并上传
+        </label>
+        <input type="hidden" name="ad_shoot" value="{{ad_shoot}}" class="su-url">
+      </div>
+    </div>
+    <div class="hide">
+      {{#each permissions}}
+      <input type="checkbox" name='permission[]' value="{{id}}" id="{{name}}" />
+      <label for="{{name}}">{{name}}</label>
+      {{/each}}
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <a name="tou"></a>
+    <legend>投放信息</legend>
+    <div class="form-group iPhone">
+      <label class="col-sm-2 control-label">投放类型</label>
+      <div class="col-sm-10 select-button">
+        <input type="radio" name="search_flag" value="0" id="search_flag-1" checked data-toggle-class="offer" data-group="search_flag" data-target="#ad-editor">
+        <label for="search_flag-1">普通广告</label>
+        <input type="radio" name="search_flag" value="1" id="search_flag-2" data-toggle-class="aso" data-group="search_flag" data-target="#ad-editor">
+        <label for="search_flag-2">ASO广告 - 自动跳转</label>
+        <input type="radio" name="search_flag" value="2" id="search_flag-3" data-toggle-class="aso" data-group="search_flag" data-target="#ad-editor">
+        <label for="search_flag-3">ASO广告 - 手动跳转</label>
+      </div>
+    </div>
+    <div class="form-group iPhone aso">
+      <label class="col-sm-2 control-label" for="keywords">ASO搜索词</label>
+      <div class="col-sm-10">
+        <input type="text" name="keywords" class="form-control" id="keywords">
+        <p class="help-block">
+          搜索ASO搜索词时，对应的应用排序需要在1-1000名以内。
+        </p>
+      </div>
+    </div>
+    <div class="form-group iPhone aso">
+      <label class="col-sm-2 control-label" for="rank">目标排名</label>
+      <div class="col-sm-10">
+        <input type="range" min="1" max="15" name="rank" id="rank" value="10"><span class="help-inline">10</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="quote_rmb">广告主报价</label>
+      <div class="col-sm-4">
+        <div class="input-group">
+          <span class="input-group-addon">&yen;</span>
+          <input type="number" name="quote_rmb" id="quote_rmb" value="{{quote_rmb}}" class="form-control" required min="0" />
+          <span class="input-group-addon">分</span>
+        </div>
+      </div>
+      <p class="help-block iPhone">
+        单价最低1元。
+      </p>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="job_num">日投放量</label>
+      <div class="col-sm-4">
+        <input type="number" id="job_num" value="{{job_num}}" class="form-control" name="job_num"  required/>
+        <p class="help-block">投放量范围1000-30000</p>
+      </div>
+    </div>
+    <div class="form-group Android">
+      <label class="col-sm-2 control-label">完成条件</label>
+      <div class="col-sm-10 select-button">
+        {{#each cates}}
+          <input type="radio" name="cate" value="{{@key}}" id="cate-{{@key}}" />
+          <label for="cate-{{@key}}">{{.}}</label>
+        {{/each}}
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">投放运营商</label>
+      <div class="col-sm-10 select-button isp">
+        {{#each net_types}}
+        <input type="checkbox" name="net_type[]" value="{{@key}}" id="net-type-{{@key}}" />
+        <label for="net-type-{{@key}}">{{.}}</label>
+        {{/each}}
+      </div>
+    </div>
+    <div class="form-group domestic">
+      <label class="col-sm-2 control-label">投放区域</label>
+      <div class="col-sm-10 select-button">
+        <input type="radio" name="province_type" value="0" data-class="show-provinces" id="province-all" />
+        <label for="province-all">全国</label>
+        <input type="radio" name="province_type" value="1" data-class="show-provinces" id="province-province" />
+        <label for="province-province">分省</label>
+      </div>
+    </div>
+    <div class="form-group provinces">
+      <label class="col-sm-2 control-label">省份选择</label>
+      <div class="col-sm-10 select-button select-button-group">
+        {{#each provinces}}
+        <input type="checkbox" name="provinces[]" value="{{@key}}" id="province-{{@key}}" {{checked}} />
+        <label for="province-{{@key}}">{{.}}</label>
+        {{/each}}
+        <hr />
+      </div>
+    </div>
+    <div class="form-group iPhone">
+      <label class="col-sm-2 control-label">投放目标：iPad/iPhone</label>
+      <div class="col-sm-10 select-button">
+        <input type="radio" name="put_ipad" value="0" id="put-ipad-all" checked />
+        <label for="put-ipad-all">iPad + iPhone</label>
+        <input type="radio" name="put_ipad" value="1" id="put-ipad-ipad" />
+        <label for="put-ipad-ipad">只投iPad</label>
+        <input type="radio" name="put_ipad" value="2" id="put-ipad-iphone" />
+        <label for="put-ipad-iphone">只投iPhone</label>
+      </div>
+    </div>
+    <div class="form-group iPhone">
+      <label class="col-sm-2 control-label">投放目标：越狱</label>
+      <div class="col-sm-10 select-button">
+        <input type="radio" name="put_jb" value="0" id="put-jb-all" checked />
+        <label for="put-jb-all">全部设备</label>
+        <input type="radio" name="put_jb" value="1" id="put-jb-only" />
+        <label for="put-jb-only">越狱设备</label>
+        <input type="radio" name="put_jb" value="2" id="put-jb-no" />
+        <label for="put-jb-no">非越狱设备</label>
+      </div>
+    </div>
+    <div class="form-group iPhone">
+      <label class="col-sm-2 control-label" for="ip">绑定广告主IP</label>
+      <div class="col-sm-10">
+        <input type="text" name="ip" id="ip" value="{{ip}}" class="form-control" />
+        <p class="help-block">
+          绑定IP后将不在校验验证码。多个IP可以用“;”分割，最多可以绑定12个的IP。
+        </p>
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <a name="channel-area"></a>
+    <legend>渠道信息</legend>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="owner">负责人</label>
+      <div class="col-sm-4 col-xs-6">
+        <select class="form-control" name="owner" id="owner">
+          {{#each sales}}
+          <option value="{{key}}">{{value}}</option>
+          {{/each}}
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="execute_owner">执行人</label>
+      <div class="col-sm-4 col-xs-6">
+        <select class="form-control" name="execute_owner" id="execute_owner">
+          {{#each sales}}
+            <option value="{{key}}">{{value}}</option>
+          {{/each}}
+        </select>
+      </div>
+    </div>
+    <div class="form-group agreement">
+      <label class="col-sm-2 control-label" for="agreement_id">关联合同</label>
+      <div class="col-sm-5">
+        <select name="agreement_id" id="agreement_id" class="form-control collection-select"
+                data-collection-id="agreement" data-url="{{API}}agreement/?today={{to_date 0}}" required>
+        <script type="text/x-handlebars-template">
+        {{{{raw-helper}}}}
+          <option value="{{id}}">{{company}}（{{agreement_id}}）</option>
+        {{{{/raw-helper}}}}
+        </script>
+        </select>
+      </div>
+      <div class="col-sm-5">
+        <div class="input-group">
+          <input class="form-control agreement-keyword" placeholder="合同名称，或编号">
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default search-agreement-button">
+              <i class="fa fa-search"></i>
+            </button>
+          </span>
+        </div>
+      </div>
+      <p class="help-block col-sm-10 col-sm-offset-2">
+        默认取最近的10份合同，您也可以通过旁边的搜索框搜索别的合同。<br>
+        已过执行保护期若的合同搜索不到，请续期后再进行关联。
+      </p>
+    </div>
+    <div class="form-group iPhone">
+      <label class="col-sm-2 control-label" for="callback_reqs">回调条件/激活条件</label>
+      <div class="col-sm-10">
+        <input name="callback_reqs" id="callback_reqs" class="form-control">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="cid">渠道号</label>
+      <div class="col-sm-10">
+        <input type="text" name="cid" id="cid" value="{{cid}}" class="form-control" required />
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="feedback">数据反馈形式</label>
+      <div class="col-sm-10">
+        <select name="feedback" id="feedback" class="form-control" required>
+          <option value=""> == 请选择 == </option>
+          <option value="1">截图</option>
+          <option value="2">官方后台</option>
+          <option value="3">渠道后台</option>
+          <option value="4">API接口</option>
+          <option value="5" class="iPhone">核对idfa</option>
+          <option value="6">实时数据</option>
+          <option value="7">按点乐数据结算</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="cycle">反馈周期</label>
+      <div class="col-sm-10">
+        <select name="cycle" id="cycle" class="form-control" required>
+          <option value=""> == 请选择 == </option>
+          <option value="1">隔日数据</option>
+          <option value="2">一周两次数据</option>
+          <option value="3">隔周数据</option>
+          <option value="4">隔月数据</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group feedback-detail">
+      <label class="col-sm-2 control-label" for="url">后台地址</label>
+      <div class="col-sm-10">
+        <input name="url" id="url" value="{{url}}" class="form-control" />
+      </div>
+    </div>
+    <div class="form-group feedback-detail">
+      <label class="col-sm-2 control-label" for="user">账号</label>
+      <div class="col-sm-10">
+        <input name="user" id="user" value="{{user}}" class="form-control" />
+      </div>
+    </div>
+    <div class="form-group feedback-detail">
+      <label class="col-sm-2 control-label" for="pwd">密码</label>
+      <div class="col-sm-10">
+        <input name="pwd" id="pwd" value="{{pwd}}" class="form-control" />
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend>杂项</legend>
+    <div class="form-group iPhone">
+      <label class="col-sm-2 control-label" for="requirements">其它投放要求</label>
+      <div class="col-sm-10">
+        <textarea name="requirements" class="form-control" rows="6" id="requirements">
+上线时间：
+下线时间：
+合同是否签订：
+甲方商务负责人及电话：
+乙方商务负责人及电话：
+        </textarea>
+        <p class=help-block">
+          此处的内容会在报备邮件中出现，下面的内容不会。（仅限iOS）
+        </p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="others">备注</label>
+      <div class="col-sm-10">
+        <textarea name="others" class="form-control" rows="2" id="others">{{others}}</textarea>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="file-email">发送报备邮件</label>
+      <div class="col-sm-10">
+        <input type="email" name="file-email" id="file-email" class="form-control">
+        <p class="help-block">
+          请填写客户邮件地址。广告生成后，会自动发送邮件给客户，由他们将邮件转发到<a href="mailto:#">baobei@dianjoy.com</a>即可完成报备。
+        </p>
+      </div>
+    </div>
+
+  </fieldset>
+
+  <hr />
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <div class="alert alert-msg" style="display: none;"></div>
+      <div class="alert alert-info success-info hide">3秒后自动跳转到广告属性页面。[<a href="#/ad/{{id}}">立刻跳转</a>]</div>
+      <button class="btn btn-block btn-lg btn-primary"><i class="fa fa-save"></i> 提交</button>
+    </div>
+  </div>
+</form>

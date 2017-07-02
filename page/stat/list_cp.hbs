@@ -1,0 +1,76 @@
+<div class="form-inline table-header">
+  <div class="form-group">
+    <label for="search-query">搜索：</label>
+    <input type="search" class="form-control" id="search-query" name="query" placeholder="关键词">
+  </div>
+</div>
+<table class="table table-bordered smart-table responsive-table" data-url="{{API}}stat/" data-pagesize-controller="#pagesize" data-pagesize="10" data-pagination=".pagination" data-ranger=".date-range" data-search="#search-query" data-collection-id="stat" data-start="{{start}}" data-end="{{end}}" {{#if has_export}}data-defaults="has_export=1"{{/if}} {{#if isDianjoy}}data-params="isDianjoy=1"{{/if}}>
+  <thead>
+  <tr>
+    <th class="filters">广告名</th>
+    <th>创建时间</th>
+    <th>关键词</th>
+    <th>激活数</th>
+    <th>总计</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <script type="text/x-handlebars-template">
+    {{{{raw-helper}}}}
+    <tr id="{{id}}">
+      <td data-title="广告名" rowspan="{{count}}">
+        <a href="#/ad_name/{{ad_name}}" class="filter label label-ad_name">{{ad_name}}</a>
+      </td>
+      <td data-title="创建时间" rowspan="{{count}}"><time datetime="{{create_time}}">{{moment create_time}}</time></td>
+      {{#each keywords}}
+      {{#unless @first}}<tr class="relate-to-{{../id}}">{{/unless}}
+      <td data-title="关键词">{{#if search_key}}{{search_key}}{{else}}<span class="text-muted"> （无）</span>{{/if}}</td>
+      <td data-title="激活数">{{readable_n num}}</td>
+      {{#if @first}}
+      <td rowspan="{{../count}}">{{readable_n ../total}}</td>
+      <td rowspan="{{../count}}">
+        <div class="btn-group">
+          <a href="#/stat/{{../id}}/{{../start}}/{{../end}}" class="btn btn-primary" title="分日统计"><i class="fa fa-calendar"></i></a>
+          {{#if ../has_export}}
+          <a href="page/ad/export-idfa_cp.hbs" class="btn btn-primary popup" title="导出数据" data-id="{{../id}}" data-confirm="导出CSV" data-popup="tp.page.DateRange" data-collection-id="stat" data-type="{{#if ../has_api}}3{{else}}0{{/if}}"><i class="fa fa-download"></i></a>
+          {{/if}}
+        </div>
+      </td>
+      {{else}}
+      </tr>
+      {{/if}}
+      {{/each}}
+    </tr>
+    {{{{/raw-helper}}}}
+  </script>
+  </tbody>
+  <tfoot class="waiting">
+  <tr>
+    <td colspan="6">
+      <p align="center"><i class="fa fa-spin fa-spinner fa-2x"></i><br>加载中，请稍候</p>
+    </td>
+  </tr>
+  </tfoot>
+</table>
+<nav class="pull-right table-footer">
+  <ul class="pagination">
+    <script type="text/x-handlebars-template">
+      {{{{raw-helper}}}}
+      <li><a href="#/to/{{prev}}"><i class="fa fa-chevron-left"></i></a></li>
+      {{#each pages}}
+      <li class="hidden-xs"><a href="#/to/{{index}}">{{label}}</a></li>
+      {{/each}}
+      <li><a href="#/to/{{next}}"><i class="fa fa-chevron-right"></i></a></li>
+      {{{{/raw-helper}}}}
+    </script>
+  </ul>
+  <div class="form-group">
+    <label for="pagesize">每页显示：</label>
+    <select class="form-control" id="pagesize">
+      <option selected>10</option>
+      <option>20</option>
+      <option>50</option>
+    </select>
+  </div>
+</nav>

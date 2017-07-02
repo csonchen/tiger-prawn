@@ -1,0 +1,31 @@
+@import "../define"
+
+.ad-date-range
+  margin-bottom: 15px
+
+#settlement-period
+  margin-top: 5px
+
+#chose-ad-table
+  background: #FFFFFF
+  border: none
+
+  & #notice
+    color: $red
+    max-width: $sidebar-width
+
+#no-ad-table
+  display: none
+
+#chose-ad-table:empty + #no-ad-table
+  display: table-footer-group
+  text-align: center
+  border: 3px #D3CCCC dotted
+  background: #F0F0F0
+
+  td
+    line-height: 137px
+
+#choose-ad-button
+  margin-left: 5px
+  position: absolute

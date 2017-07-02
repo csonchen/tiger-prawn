@@ -1,0 +1,97 @@
+@charset "UTF-8"
+
+@import "../../bower_components/colors/sass/variables"
+@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/variables"
+@import "../define"
+
+body.login
+  background-color: $topbar-background-color
+
+#login
+  .logos
+    position: absolute
+    top: -50px
+    left: 0
+    right: 0
+    text-align: center
+    z-index: 100
+
+    .logo,
+    .oauth
+      display: inline-block
+      border: 4px solid rgba(255, 255, 255, .4)
+      vertical-align: middle
+
+      img
+        display: block
+
+    .logo
+      padding: 15px 0 0 18px
+      background-color: $red
+      border-radius: 100%
+      width: 92px
+      height: 92px
+
+      + i
+        color: $silver
+        vertical-align: middle
+        margin-top: $gap
+        width: 50px
+        text-align: center
+        text-shadow: 0 2px 1px rgba(0, 0, 0, .3)
+
+    .oauth
+      background: $black center center no-repeat
+      border-color: $silver
+      border-radius: $gap
+      color: $white
+      font-size: 4em
+      line-height: 76px
+      width: 84px
+      height: 84px
+
+  h3
+    text-align: center
+
+  form
+    padding: 0
+    margin-top: 1em
+    margin-bottom: 1em
+
+    label
+      display: none
+
+    .form-control
+      height: 40px
+      padding-top: 8px
+      padding-bottom: 8px
+
+  #verify-code
+    cursor: pointer
+
+  button
+    padding-top: 10px
+    padding-bottom: 10px
+    font-size: 20px
+
+  .form-group
+    margin-bottom: $gap-l
+
+  #page-container &
+    padding: 65px $gap-l $gap-l
+    background-color: #FFF
+    border-radius: 4px
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.65)
+    position: absolute
+    top: 5em
+    left: 50%
+    margin-left: -200px
+    width: 400px
+
+    @media (max-width: $screen-xs-max)
+      &
+        margin-top: 50px
+
+  .modal-body &
+    .logo, h3, h5
+      display: none

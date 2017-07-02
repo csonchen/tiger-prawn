@@ -1,0 +1,89 @@
+<div class="form-inline table-header">
+  <div class="form-group">
+    <label for="search-query">搜索：</label>
+    <input type="search" class="form-control" id="search-query" value="{{query}}" autofocus>
+  </div>
+</div>
+
+<table class="table table-bordered table-striped responsive-table add-on-list" data-key="ad_comments" data-collection-id="info">
+  <caption>相关点评</caption>
+  <thead>
+  <tr>
+    <th>广告名</th>
+    <th>包名</th>
+    <th>运营点评</th>
+  </tr>
+  </thead>
+  <tbody>
+  <script type="text/x-handlebars-template">
+    {{{{raw-helper}}}}
+    <tr id="{{pack_name}}">
+      <td>{{ad_name}}</td>
+      <td>{{pack_name}}</td>
+      <td>
+        {{#each comments}}
+        {{comment}} <small>（{{author}}：<time datetime="{{create_time}}" class="text-muted">{{moment create_time}}</time>）</small><br>
+        {{/each}}
+      </td>
+    </tr>
+    {{{{/raw-helper}}}}
+  </script>
+  </tbody>
+</table>
+
+<table class="table table-bordered table-striped responsive-table smart-table" data-url="{{API}}info/" data-search="#search-query" data-collection-id="info"  data-auto-fetch="false">
+  <caption>搜索结果</caption>
+  <thead>
+  <tr>
+    <th>广告名</th>
+    <th>创建时间</th>
+    <th>广告主报价</th>
+    <th>转化率</th>
+    <th>上线要求</th>
+    <th>下线要求</th>
+    <th>数据反馈</th>
+    <th>运行状态</th>
+  </tr>
+  </thead>
+  <tbody>
+  <script type="text/x-handlebars-template">
+    {{{{raw-helper}}}}
+    <tr id="{{id}}">
+      <td>
+        {{ad_name}}
+        {{#if is_full}}
+          <span class="label label-warning" title="该广告已经饱和">饱</span>
+        {{else if fullness}}
+          <span class="label label-info" title="接近饱和">近</span>
+        {{else}}
+          <span class="label label-success" title="不饱和，可以接入广告">饿</span>
+        {{/if}}
+      </td>
+      <td><time datetime="{{create_time}}">{{moment create_time}}</time></td>
+      <td>&yen;{{d100 quote_rmb}}</td>
+      <td>{{percent ratio}}%</td>
+      <td>{{{text-collapse others 30}}}</td>
+      <td>{{{text-collapse offline_msg 30}}}</td>
+      <td>{{pick feedback '' '截图' '官方后台' '渠道后台' 'API接口' '核对mac地址' '实时数据'}}</td>
+      <td>
+        {{#if transfer}}
+        <strong class="text-success"><i class="fa fa-check"></i> 已推广</strong>
+        {{#if payment}}<small class="text-success">（回款率：{{payment_percent}}%）</small>{{/if}}
+        {{else}}
+        <strong class="text-danger"><i class="fa fa-times"></i> 未上线</strong>
+        {{/if}}
+      </td>
+    </tr>
+    {{{{/raw-helper}}}}
+  </script>
+  </tbody>
+</table>
+
+<div class="alert alert-info">
+  <h4><i class="fa fa-smile-o"></i> 请输入您关心的广告名进行搜索。</h4>
+  <ul>
+    <li>系统会取出最近的十条相关内容供您参考。</li>
+    <li>搜索结果只包含 <strong>广告墙</strong> 广告。</li>
+    <li>“运行状态”是过去 <strong>3</strong> 个月的投放结果。</li>
+  </ul>
+</div>

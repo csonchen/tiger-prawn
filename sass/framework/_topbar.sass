@@ -1,0 +1,191 @@
+@charset "UTF-8"
+
+@import "compass/css3/box-shadow"
+
+#navbar-top
+  background-color: $topbar-background-color
+  border-color: darken($topbar-background-color, 5%)
+  color: $navbar-color
+
+  .navbar-brand
+    color: $white
+    background: url(http://cc-cdn.dianjoy.com/static/img/logo.png) no-repeat 7px center
+    background-size: 36px auto
+    text-indent: 36px
+    position: relative
+    width: $sidebar-width
+
+  .nav > li > a
+    color: $navbar-color
+
+    &:hover,
+    &:active,
+    &.active
+      background-color: lighten($topbar-background-color, 10%)
+      color: $white
+
+  .nav .open > a
+    background-color: lighten($topbar-background-color, 10%)
+
+  .system-notice
+    .dropdown-toggle
+      span
+        position: absolute
+        top: $gap-s
+        right: 0
+        background-color: $red
+        border-radius: 100%
+        color: $white
+        font-size: 10px
+        text-align: center
+        line-height: 20px
+        width: 20px
+
+    .dropdown-menu
+      max-height: 640px
+      overflow: auto
+
+    .alarm
+      padding: 0 $gap-l
+      white-space: nowrap
+
+      input:checked + a
+        text-decoration: line-through
+
+        strong
+          font-weight: normal
+
+      > a
+        display: inline-block
+        padding: 3px 0
+
+    .op
+      padding: 0 $gap-l $gap-s
+
+      .label
+        display: inline-block
+        margin-bottom: 0
+
+  .invoice-list
+    .dropdown-menu
+      height: auto
+      max-height: 400px
+      overflow-x: hidden
+
+    .ids
+      padding: 0 25px
+      color: $black
+      white-space: nowrap
+      input
+        display: inline-block
+        visibility: hidden
+      span
+        color: $gray
+        font-size: 12px
+        margin-left: 15px
+
+    .delete-button, .clear-button
+      padding: 2px 12px
+      color: $red
+
+    .channel
+      margin-top: 15px
+      font-size: 14px
+      color: $black
+      .check-all
+        margin-right: 5px
+      label
+        margin-bottom: 0
+      .fa-chevron-right
+        display: none
+
+    .apply
+      padding: 0 10px 5px
+
+    .divider
+      margin: 20px 0 10px 0
+
+    .invalid
+      background-color: $dropdown-link-hover-bg
+
+      .fa-chevron-right
+        display: inline-block
+        color: $green
+        margin-right: 6px
+
+      .fa-trash-o
+        display: none
+
+      .check-all
+        display: none
+
+  @media (max-width: $screen-xs-max)
+    &
+      position: relative
+      margin-bottom: 0
+
+      .navbar-brand
+        width: auto
+
+      .navbar-toggle
+        margin-top: $gap-s
+        margin-bottom: $gap-s
+
+      .container-fluid
+        padding: 0
+
+      .navbar-header
+        margin: 0
+
+      .navbar-top-inner
+        background-color: darken($topbar-background-color, 10%)
+        width: 100%
+
+      .navbar-form,
+      .navbar-nav
+        border: none
+        margin: 0
+
+      .global-search
+        @include box-shadow(none)
+        padding: $gap $gap 0
+
+        .fa-spinner,
+        .clear-button
+          color: $white
+          top: $gap + $gap-s
+          right: $gap + $gap-s
+          line-height: $gap-l
+
+        input
+          background-color: darken($topbar-background-color, 8%)
+          color: $silver
+          margin: 0
+          width: 100%
+
+          &:focus
+            color: $black
+
+            ~ .fa-spinner,
+            ~ .clear-button
+              color: $black
+
+        .result
+          left: $gap
+          right: $gap
+
+      .navbar-nav
+        color: $white
+        text-align: center
+
+        > li
+          display: inline-block
+
+        .open .dropdown-menu
+          background: $white
+          position: absolute
+          top: 100%
+          left: 0
+          right: auto
+
+@import "../component/global-search"

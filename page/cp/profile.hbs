@@ -1,0 +1,64 @@
+<div class="container">
+  <table class="table table-hover">
+    <caption>基础信息</caption>
+    <tr>
+      <th width="10%">账号</th>
+      <td>{{email}}</td>
+    </tr>
+    <tr>
+      <th>公司名称</th>
+      <td>{{fullname}}</td>
+    </tr>
+    <tr>
+      <th>联系人</th>
+      <td><a href="#username" class="edit">{{username}}</a></td>
+    </tr>
+    <tr>
+      <th>联系电话</th>
+      <td><a href="#phone" class="edit">{{phone}}</a></td>
+    </tr>
+    <tr>
+      <th>联系QQ</th>
+      <td><a href="#qq" class="edit" data-pattern="\d{6,15}">{{qq}}</a></td>
+    </tr>
+    <tr>
+      <th>点乐接口人</th>
+      <td>{{owner}}</td>
+    </tr>
+    <tr>
+      <th>上级登录时间</th>
+      <td>{{last_login.time}}</td>
+    </tr>
+    <tr>
+      <th>上次登录ip</th>
+      <td>{{last_login.ip}}</td>
+    </tr>
+  </table>
+
+  <hr>
+
+  <form action="{{API}}user/" method="PATCH" class="ajax">
+    <table class="table">
+      <caption>修改密码</caption>
+      <tr>
+        <th width="10%"><label class="control-label" for="oldpassword">原始密码</label></th>
+        <td><input type="password" name="oldpassword" id="oldpassword" class="form-control" placeholder="请输入当前密码"></td>
+      </tr>
+      <tr>
+        <th><label for="newpassword">新密码</label></th>
+        <td><input type="password" name="newpassword" id="newpassword" class="form-control" placeholder="请输入新的密码"></td>
+      </tr>
+      <tr>
+        <th><label for="repassword">确认密码</label></th>
+        <td><input type="password" name="repassword" id="repassword" class="form-control" placeholder="请在输入一次新密码"></td>
+      </tr>
+      <tr>
+        <th></th>
+        <td>
+          <div class="alert alert-msg" style="display: none"></div>
+          <button class="btn btn-primary"><i class="fa fa-save"></i> 更新密码</button>
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>

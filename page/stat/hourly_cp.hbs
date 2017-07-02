@@ -1,0 +1,47 @@
+<div class="page-header">
+  <h1>{{ad_name}}</h1>
+</div>
+<div class="form-inline table-header" action="#/stat/{{id}}/:date">
+  <a href="#/stat/{{id}}/{{to_date date -1}}" class="btn btn-default"><i class="fa fa-chevron-left"></i></a>
+  <div class="form-group">
+    <input class="tac form-control auto-submit datetimepicker" name="date" data-format="YYYY-MM-DD" value="{{date}}">
+  </div>
+  <a href="#/stat/{{id}}/{{to_date date 1}}" class="btn btn-default"><i class="fa fa-chevron-right"></i></a>
+</div>
+
+<table class="table table-bordered smart-table responsive-table" data-url="{{API}}stat/{{id}}/{{date}}" data-pagesize="24" >
+  <thead>
+  <tr>
+    <th>时间</th>
+    <th>关键词</th>
+    <th>激活数</th>
+    <th>总计</th>
+  </tr>
+  </thead>
+  <tbody>
+  <script type="text/x-handlebars-template">
+    {{{{raw-helper}}}}
+    <tr>
+      <td data-title="时间" rowspan="{{count}}">{{hour}} 时</td>
+      {{#each keywords}}
+      {{#unless @first}}<tr>{{/unless}}
+      <td data-title="关键词">{{#if search_key}}{{search_key}}{{else}}<span class="text-muted">（无）</span>{{/if}}</td>
+      <td data-title="激活数">{{readable_n num}}</td>
+      {{#if @first}}
+      <td data-title="总计" rowspan="{{../count}}">{{readable_n ../total}}</td>
+      {{else}}
+      </tr>
+      {{/if}}
+      {{/each}}
+    </tr>
+    {{{{/raw-helper}}}}
+  </script>
+  </tbody>
+  <tfoot class="waiting">
+  <tr>
+    <td colspan="6">
+      <p align="center"><i class="fa fa-spin fa-spinner fa-2x"></i><br>加载中，请稍候</p>
+    </td>
+  </tr>
+  </tfoot>
+</table>
