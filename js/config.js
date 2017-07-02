@@ -9,7 +9,7 @@
   ns.path = ''; // 项目路径
   ns.config = {
     login: {
-      welcome: '欢迎使用点乐广告自助平台',
+      welcome: '欢迎使用久韵广告自助平台',
       admin: 'service@dianjoy.com',
       verify: ns.API + 'showimg.php',
       className: 'login'

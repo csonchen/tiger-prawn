@@ -1,9 +1,9 @@
-<h3 class="tac" id="invoice-title">{{#if company}}{{company}}{{else}}{{full_name}}{{/if}}-点乐{{#equal start end}}{{start}}{{else}}{{start}}~{{end}}{{/equal}}结算单及开票申请单 </h3>
+<h3 class="tac" id="invoice-title">{{#if company}}{{company}}{{else}}{{full_name}}{{/if}}-久韵{{#equal start end}}{{start}}{{else}}{{start}}~{{end}}{{/equal}}结算单及开票申请单 </h3>
 <h4 class="tac">
-  <a data-toggle="popover" data-content="{{#each agreement_info}}{{@this}}<br>{{/each}}" data-html="true" data-title="合同信息" id="agreement-number">点乐合同编号：{{agreement_number}}</a>
+  <a data-toggle="popover" data-content="{{#each agreement_info}}{{@this}}<br>{{/each}}" data-html="true" data-title="合同信息" id="agreement-number">久韵合同编号：{{agreement_number}}</a>
 </h4>
 <div class="table-header">
-  <a href="#" download="{{#if company}}{{company}}{{else}}{{full_name}}{{/if}}-点乐{{start}}结算单.xls" class="btn btn-primary export-button" title="导出对账单"><i class="fa fa-download">导出对账单</i></a>
+  <a href="#" download="{{#if company}}{{company}}{{else}}{{full_name}}{{/if}}-久韵{{start}}结算单.xls" class="btn btn-primary export-button" title="导出对账单"><i class="fa fa-download">导出对账单</i></a>
 </div>
 <table class="table table-bordered table-striped responsive-table print-table" id="ad_table" data-typeahead="false" data-url="{{API}}invoice/ad/" data-auto-fetch="false">
   <thead>
@@ -149,11 +149,11 @@
       <table class="table table-bordered table-striped print-table" style="display: inline-table;">
         <tr>
           <th width="10%">收款方</th>
-          <td colspan="7">北京无限点乐科技有限公司</td>
+          <td colspan="7">北京无限久韵科技有限公司</td>
         </tr>
         <tr>
           <th>开户名称</th>
-          <td colspan="7">北京无限点乐科技有限公司</td>
+          <td colspan="7">北京无限久韵科技有限公司</td>
         </tr>
         <tr>
           <th>开户银行</th>
