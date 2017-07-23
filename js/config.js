@@ -3,8 +3,8 @@
  */
 'use strict';
 (function (ns) {
-  ns.API = 'http://ad-diy.com/diy/';
-  ns.UPLOAD = 'http://ad-diy.com/diy/'; // 上传文件的起始路径
+  ns.API = 'http://sys.reverflow.com/diy/';
+  ns.UPLOAD = 'http://sys.reverflow.com/diy/'; // 上传文件的起始路径
   ns.VERSION = '${version}';
   ns.path = ''; // 项目路径
   ns.config = {
