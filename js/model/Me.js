@@ -74,7 +74,7 @@
             var from = localStorage.getItem(tp.PROJECT + '-from');
             from = /^#\/user\/log(in|out)$/.test(from) ? '' : from;
             localStorage.removeItem(tp.PROJECT + '-from');
-            location.hash = from || tp.startPage || '#/dashboard';
+            // location.hash = from || tp.startPage || '#/dashboard';
           }
         }, 10);
       } else {

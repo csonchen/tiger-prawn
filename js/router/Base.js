@@ -23,6 +23,9 @@
       this.showUserPage('login', oauth);
     },
     showDashboard: function (start, end) {
+      return true;
+
+      // 不返回dashboard页面
       var Model = Backbone.Model.extend({
         url: tp.API + 'dashboard/',
         parse: function (response) {
