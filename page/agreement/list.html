@@ -1,0 +1,35 @@
+<table class="table table-bordered table-hover responsive-table smart-table title-eight" data-url="{{API}}agreement/list/" data-collection-id="agreement-list">
+    <thead>
+        <tr>
+            <th>客户名称</th>
+            <th>客户简称</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <script type="text/x-handlebars-template">
+            <tr id="{{id}}">
+                <td data-title="客户名称">{{company}}</td>
+                <td data-title="客户简称">{{company_short}}</td>
+            </tr>
+        </script>
+    </tbody>
+    <tfoot class="waiting">
+    <tr>
+        <td colspan="11">
+            <p align="center"><i class="fa fa-spinner fa-spin fa-2x"></i><br>加载中，请稍候</p>
+        </td>
+    </tr>
+    </tfoot>
+
+    <tfoot class="waiting">
+        <tr>
+            <td colspan="11">
+                <p align="center">
+                    <i class="fa fa-spinner fa-spin fa-2x"></i><br/>加载中，请稍后
+                </p>
+            </td>
+        </tr>
+    </tfoot>
+
+</table>
