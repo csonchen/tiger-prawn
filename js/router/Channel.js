@@ -3,13 +3,13 @@
  * Created by chensheng on 2017/8/1.
  */
 (function (ns, _, Backbone) {
-    ns.Agreement = Backbone.Router.extend({
+    ns.Channel = Backbone.Router.extend({
         $body: null,
         $context: null,
         $me: null,
         routes: {
-            "agreement/create(/)": "create",
-            "agreement/list(/)": "list"
+            "channel/create(/)": "create",
+            "channel/list(/)": "list"
         },
 
         create: function() {
@@ -19,8 +19,8 @@
         list: function() {
             var init = {API: tp.API};
             this.$body
-                .load('page/agreement/list.html', init)
-                .setFramework('agreement agreement-list', '我的广告主');
+                .load('page/jy/channel/list.html', init)
+                .setFramework('channel channel-list', '我的广告主');
         }
     });
 

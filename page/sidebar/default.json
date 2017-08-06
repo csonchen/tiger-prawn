@@ -7,12 +7,12 @@
       {
         "title": "创建广告主",
         "icon": "plus",
-        "link": "#/agreement/create"
+        "link": "#/channel/create"
       },
       {
         "title": "我的广告主",
         "icon": "list",
-        "link": "#/agreement/list"
+        "link": "#/channel/list"
       }
     ]
   },
