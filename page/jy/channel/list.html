@@ -13,12 +13,24 @@
     <tbody>
     <script type="text/x-handlebars-template">
         <tr id="{{id}}">
-            <td data-title="公司名称">{{company_name}}</td>
-            <td data-title="联系人">{{user}}</td>
-            <td data-title="联系方式">{{telephone}}</td>
-            <td data-title="联系地址">{{address}}</td>
-            <td data-title="备注">{{comment}}</td>
-            <td data-title="邮件报备">{{email}}</td>
+            <td data-title="公司名称">
+                <a href="#company_name" class="edit">{{company_name}}</a>
+            </td>
+            <td data-title="联系人">
+                <a href="#user" class="edit">{{user}}</a>
+            </td>
+            <td data-title="联系方式">
+                <a href="#telephone" class="edit">{{telephone}}</a>
+            </td>
+            <td data-title="联系地址">
+                <a href="#address" class="edit">{{address}}</a>
+            </td>
+            <td data-title="备注">
+                <a href="#comment" data-type="long-text" class="edit">{{comment}}</a>
+            </td>
+            <td data-title="邮件报备">
+                <a href="#email" class="edit">{{email}}</a>
+            </td>
         </tr>
     </script>
     </tbody>
