@@ -13,7 +13,11 @@
         },
 
         create: function() {
-            console.log('aaa')
+            var model = this.$context.createInstance(tp.model.Channel);
+            this.$context.mapValue('channel', model, true);
+            this.$body
+                .load('page/jy/channel/create.hbs', model)
+                .setFramework('channel channel-create', '创建广告主');
         },
 
         list: function() {
