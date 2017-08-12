@@ -2,7 +2,7 @@
   {
     "title": "广告主管理",
     "icon": "flag",
-    "sub-id": "sidebar-agreement",
+    "sub-id": "jy-sidebar-agreement",
     "sub": [
       {
         "title": "创建广告主",
@@ -13,6 +13,23 @@
         "title": "我的广告主",
         "icon": "list",
         "link": "#/channel/list"
+      }
+    ]
+  },
+  {
+    "title": "广告管理",
+    "icon": "flag",
+    "sub-id": "jy-sidebar-ad",
+    "sub": [
+      {
+        "title": "创建广告",
+        "icon": "plus",
+        "link": "#/jy-ad/create"
+      },
+      {
+        "title": "我投放的广告",
+        "icon": "list",
+        "link": "#/jy-ad/list"
       }
     ]
   },
