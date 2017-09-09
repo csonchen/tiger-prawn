@@ -1,0 +1,51 @@
+<table class="table table-bordered table-hover responsive-table smart-table title-eight" data-url="{{API}}jy_client/" data-collection-id="client-list">
+    <thead>
+    <tr>
+        <th>客户姓名</th>
+        <th>所属公司</th>
+        <th>合作范围</th>
+        <th>联系方式</th>
+        <th>通讯地址</th>
+        <th>客户生日</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <script type="text/x-handlebars-template">
+        <tr id="{{id}}">
+            <td data-title="客户姓名">
+                <a href="#name" class="edit">{{name}}</a>
+            </td>
+            <td data-title="所属公司">
+                <a href="#company" class="edit">{{company}}</a>
+            </td>
+            <td data-title="合作范围">
+                <a href="#type" class="edit">{{type}}</a>
+            </td>
+            <td data-title="联系方式">
+                <a href="#telephone" class="edit">{{telephone}}</a>
+            </td>
+            <td data-title="通讯地址">
+                <a href="#address" class="edit">{{address}}</a>
+            </td>
+            <td data-title="客户生日">
+                <a href="#birthday" class="edit">{{birthday}}</a>
+            </td>
+            <td data-title="操作">
+                <a href="#/diy/{{id}}/edit" class="btn btn-primary"><i class="fa fa-edit"></i> 修改</a>
+            </td>
+        </tr>
+    </script>
+    </tbody>
+
+    <tfoot class="waiting">
+    <tr>
+        <td colspan="11">
+            <p align="center">
+                <i class="fa fa-spinner fa-spin fa-2x"></i><br/>加载中，请稍后
+            </p>
+        </td>
+    </tr>
+    </tfoot>
+</table>
