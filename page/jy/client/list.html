@@ -21,7 +21,7 @@
                 <a href="#company" class="edit">{{company}}</a>
             </td>
             <td data-title="合作范围">
-                <a href="#type" class="edit">{{type}}</a>
+                <a href="#type" class="edit" data-type="select" data-options="types">{{pick type '' '中国' '外国'}}</a>
             </td>
             <td data-title="联系方式">
                 <a href="#telephone" class="edit">{{telephone}}</a>
@@ -30,10 +30,13 @@
                 <a href="#address" class="edit">{{address}}</a>
             </td>
             <td data-title="客户生日">
-                <a href="#birthday" class="edit">{{birthday}}</a>
+                <a href="#birthday" class="edit" data-type="date">{{birthday}}</a>
             </td>
             <td data-title="操作">
-                <a href="#/diy/{{id}}/edit" class="btn btn-primary"><i class="fa fa-edit"></i> 修改</a>
+                <div class="btn-group">
+                    <a href="#/diy/{{id}}/edit" class="btn btn-primary"><i class="fa fa-edit"></i> 修改</a>
+                    <button class="btn btn-danger delete-button" title="撤回"><i class="fa fa-trash-o fa-fw"></i></button>
+                </div>
             </td>
         </tr>
     </script>
