@@ -1,46 +1,43 @@
-<table class="table table-bordered table-hover responsive-table smart-table title-eight" data-url="{{API}}jy_channel/" data-collection-id="agreement-list">
+<table class="table table-bordered table-hover responsive-table smart-table title-eight" data-url="{{API}}j_channel/" data-collection-id="channel-list">
     <thead>
     <tr>
-        <th>公司名称</th>
-        <th>联系人</th>
+        <th>渠道名称</th>
+        <th>所属公司</th>
+        <th>合作范围</th>
         <th>联系方式</th>
-        <th>联系地址</th>
-        <th>备注</th>
-        <th>邮件报备</th>
+        <th>通讯地址</th>
+        <th>客户生日</th>
+        <th>操作</th>
     </tr>
     </thead>
 
     <tbody>
     <script type="text/x-handlebars-template">
         <tr id="{{id}}">
-            <td data-title="公司名称">
-                <a href="#company_name" class="edit">{{company_name}}</a>
+            <td data-title="渠道名称">
+                <a href="#name" class="edit">{{name}}</a>
             </td>
-            <td data-title="联系人">
-                <a href="#user" class="edit">{{user}}</a>
+            <td data-title="所属公司">
+                <a href="#company" class="edit">{{company}}</a>
+            </td>
+            <td data-title="合作范围">
+                <a href="#type" class="edit">{{type}}</a>
             </td>
             <td data-title="联系方式">
                 <a href="#telephone" class="edit">{{telephone}}</a>
             </td>
-            <td data-title="联系地址">
+            <td data-title="通讯地址">
                 <a href="#address" class="edit">{{address}}</a>
             </td>
-            <td data-title="备注">
-                <a href="#comment" data-type="long-text" class="edit">{{comment}}</a>
+            <td data-title="客户生日">
+                <a href="#birthday" class="edit">{{birthday}}</a>
             </td>
-            <td data-title="邮件报备">
-                <a href="#email" class="edit">{{email}}</a>
+            <td data-title="操作">
+                <a href="#/diy/{{id}}/edit" class="btn btn-primary"><i class="fa fa-edit"></i> 修改</a>
             </td>
         </tr>
     </script>
     </tbody>
-    <tfoot class="waiting">
-    <tr>
-        <td colspan="11">
-            <p align="center"><i class="fa fa-spinner fa-spin fa-2x"></i><br>加载中，请稍候</p>
-        </td>
-    </tr>
-    </tfoot>
 
     <tfoot class="waiting">
     <tr>
@@ -51,5 +48,4 @@
         </td>
     </tr>
     </tfoot>
-
 </table>

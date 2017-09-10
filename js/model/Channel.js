@@ -5,7 +5,7 @@
 (function (ns, Backbone, _) {
     ns.Channel = Backbone.Model.extend({
         $me: null,
-        urlRoot: tp.API + 'jy_channel/',
+        urlRoot: tp.API + 'j_channel/',
         toJSON: function (options) {
             var json = Backbone.Model.prototype.toJSON.call(this, options);
             if (options) { // from sync，因为{patch: true}

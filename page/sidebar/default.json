@@ -15,5 +15,22 @@
         "link": "#/client/list"
       }
     ]
+  },
+  {
+    "title": "渠道管理",
+    "icon": "flag",
+    "sub-id": "jy-sidebar-channel",
+    "sub": [
+      {
+        "title": "新建渠道",
+        "icon": "plus",
+        "link": "#/channel/create"
+      },
+      {
+        "title": "渠道列表",
+        "icon": "list",
+        "link": "#/channel/list"
+      }
+    ]
   }
 ]

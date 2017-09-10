@@ -5,7 +5,7 @@
 (function (ns, Backbone, _) {
     ns.Client = Backbone.Model.extend({
         $me: null,
-        urlRoot: tp.API + 'jy_client/',
+        urlRoot: tp.API + 'j_client/',
         toJSON: function (options) {
             var json = Backbone.Model.prototype.toJSON.call(this, options);
             if (options) {

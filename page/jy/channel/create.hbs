@@ -1,25 +1,41 @@
-<form class="form-horizontal model-editor" method="post" enctype="multipart/form-data" id="channel-editor"
-      data-target="channel">
+<form class="form-horizontal model-editor" method="post" enctype="multipart/form-data" id="channel-editor" data-target="channel">
     <fieldset>
         <a name="basic-info"></a>
         <legend>基础信息</legend>
 
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="company_name">公司名称</label>
+            <label class="col-sm-2 control-label" for="name">渠道名称</label>
             <div class="col-sm-10">
-                <input name="company_name" id="company_name" class="form-control"/>
+                <input name="name" id="name" class="form-control"/>
             </div>
         </div>
 
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="user">联系人</label>
+            <label class="col-sm-2 control-label" for="company">所属公司</label>
             <div class="col-sm-10">
-                <input name="user" id="user" class="form-control"/>
+                <input name="company" id="company" class="form-control"/>
             </div>
         </div>
 
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="address">联系地址</label>
+            <label class="col-sm-2 control-label" for="type">合作范围</label>
+            <div class="col-sm-10">
+                <select name="type" id="type" class="form-control" required>
+                    <option value="1">中国</option>
+                    <option value="2">外国</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="telephone">联系方式</label>
+            <div class="col-sm-10">
+                <input name="telephone" id="telephone" class="form-control"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="address">通讯地址</label>
             <div class="col-sm-10">
                 <input name="address" id="address" class="form-control"/>
             </div>
@@ -28,14 +44,21 @@
         <div class="form-group">
             <label class="col-sm-2 control-label" for="comment">备注</label>
             <div class="col-sm-10">
-                <input name="comment" id="comment" class="form-control"/>
+                <textarea class="form-control" rows="6" name="comment" id="comment" maxlength="1024"></textarea>
             </div>
         </div>
 
         <div class="form-group">
-            <label class="col-sm-2 control-label" for="email">邮件报备　</label>
+            <label class="col-sm-2 control-label" for="birthday">客户生日</label>
             <div class="col-sm-10">
-                <input name="email" id="email" class="form-control"/>
+                <input type="date" name="birthday" id="birthday" class="form-control"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="weibo">客户微博</label>
+            <div class="col-sm-10">
+                <input name="weibo" id="weibo" class="form-control"/>
             </div>
         </div>
     </fieldset>

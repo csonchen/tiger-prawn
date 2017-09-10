@@ -17,14 +17,14 @@
             this.$context.mapValue('channel', model, true);
             this.$body
                 .load('page/jy/channel/create.hbs', model)
-                .setFramework('channel channel-create', '创建广告主');
+                .setFramework('channel channel-create', '创建渠道');
         },
 
         list: function() {
             var init = {API: tp.API};
             this.$body
                 .load('page/jy/channel/list.html', init)
-                .setFramework('channel channel-list', '我的广告主');
+                .setFramework('channel channel-list', '渠道列表');
         }
     });
 
