@@ -2,7 +2,7 @@
   {
     "title": "客户管理",
     "icon": "flag",
-    "sub-id": "jy-sidebar-agreement",
+    "sub-id": "jy-sidebar-client",
     "sub": [
       {
         "title": "新建客户",
@@ -30,6 +30,23 @@
         "title": "渠道列表",
         "icon": "list",
         "link": "#/channel/list"
+      }
+    ]
+  },
+  {
+    "title": "合同管理",
+    "icon": "flag",
+    "sub-id": "jy-sidebar-agreement",
+    "sub": [
+      {
+        "title": "新建合同",
+        "icon": "plus",
+        "link": "#/agreement/create"
+      },
+      {
+        "title": "合同列表",
+        "icon": "list",
+        "link": "#/agreement/list"
       }
     ]
   }

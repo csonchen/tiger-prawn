@@ -1,0 +1,94 @@
+<form class="form-horizontal model-editor" method="post" enctype="multipart/form-data" id="agreement-editor" data-target="agreement">
+    <fieldset>
+        <a name="basic-info"></a>
+        <legend>基础信息</legend>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="full_name">公司名称</label>
+            <div class="col-sm-10">
+                <input name="full_name" id="full_name" class="form-control"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="aligns_name">公司简称</label>
+            <div class="col-sm-10">
+                <input name="aligns_name" id="aligns_name" class="form-control"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">合同类型</label>
+            <div class="col-sm-10 platform select-button">
+                <input type="radio" name="type" value="1" id="platform-jia" checked>
+                <label for="platform-jia" class="btn btn-primary">甲方</label>
+                <input type="radio" name="type" value="2" id="platform-yi">
+                <label for="platform-yi" class="btn btn-primary">乙方</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="number">合同编号</label>
+            <div class="col-sm-10">
+                <input name="number" id="number" value="JY2017091601" class="form-control" readonly/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">有效期</label>
+            <div class="col-sm-4 start-date">
+                <input type="date" name="start_date" class="form-control">
+            </div>
+            <div class="col-sm-2" style="text-align: center;"> ~ </div>
+            <div class="col-sm-4 end-date">
+                <input type="date" name="end_date" class="form-control">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="sign_person">签订人</label>
+            <div class="col-sm-5">
+                <select name="sign_person" id="sign_person" class="form-control" required>
+                    {{#each sales}}
+                        <option value="{{@key}}">{{.}}</option>
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="contact_person">联系人</label>
+            <div class="col-sm-5">
+                <input name="contact_person" id="contact_person" class="form-control"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="telephone">联系方式</label>
+            <div class="col-sm-5">
+                <input name="telephone" id="telephone" class="form-control"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="address">通信地址</label>
+            <div class="col-sm-5">
+                <input name="address" id="address" class="form-control"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label" for="comment">备注</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" rows="6" name="comment" id="comment" maxlength="1024"></textarea>
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <div class="alert alert-msg" style="display: none;"></div>
+            <button class="btn btn-block btn-lg btn-primary"><i class="fa fa-save"></i> 提交</button>
+        </div>
+    </div>
+</form>
