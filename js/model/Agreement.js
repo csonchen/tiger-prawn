@@ -16,6 +16,14 @@
                 json.previous = previous;
             }
             return _.extend(json, this.options, this.collection ? this.collection.options : null);
+        },
+        parse: function (response) {
+            if (response.options) {
+                this.options = response.options;
+                this.options.API = tp.API;
+                this.options.UPLOAD = tp.UPLOAD;
+            }
+            return response;
         }
     });
 }(Nervenet.createNameSpace('tp.model'), Backbone, _));

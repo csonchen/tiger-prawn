@@ -13,6 +13,7 @@
 
         create: function() {
             var model = this.$context.createInstance(tp.model.Agreement);
+            console.log(model);
             this.$context.mapValue('agreement', model, true);
             this.$body
                 .load('page/jy/agreement/create.hbs', model)

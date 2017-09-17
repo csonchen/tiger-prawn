@@ -1,4 +1,19 @@
-<table class="table table-bordered table-hover responsive-table smart-table title-eight" data-url="{{API}}j_channel/" data-collection-id="channel-list">
+<div class="form-inline table-header">
+    <div class="form-group">
+        <label for="pagesize">每页显示：</label>
+        <select class="form-control" id="pagesize">
+            <option selected>10</option>
+            <option>20</option>
+            <option>50</option>
+        </select>
+    </div>
+    <div class="form-group pull-right">
+        <label for="search-query">搜索：</label>
+        <input type="search" class="form-control" id="search-query" placeholder="渠道名称">
+    </div>
+</div>
+
+<table class="table table-bordered table-hover responsive-table smart-table title-eight" data-url="{{API}}j_channel/" data-search="#search-query"  data-pagination=".pagination" data-pagesize-controller="#pagesize" data-pagesize="10" data-collection-id="channel-list">
     <thead>
     <tr>
         <th>渠道名称</th>
@@ -52,3 +67,15 @@
     </tr>
     </tfoot>
 </table>
+
+<nav class="pull-right">
+    <ul class="pagination">
+        <script type="text/x-handlebars-template">
+            <li><a href="#/to/{{prev}}"><i class="fa fa-chevron-left"></i></a></li>
+            {{#each pages}}
+            <li class="hidden-xs"><a href="#/to/{{index}}">{{label}}</a></li>
+            {{/each}}
+            <li><a href="#/to/{{next}}"><i class="fa fa-chevron-right"></i></a></li>
+        </script>
+    </ul>
+</nav>
