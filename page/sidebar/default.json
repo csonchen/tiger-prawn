@@ -49,5 +49,22 @@
         "link": "#/agreement/list"
       }
     ]
+  },
+  {
+    "title": "广告管理",
+    "icon": "flag",
+    "sub-id": "jy-sidebar-ad",
+    "sub": [
+      {
+        "title": "新建客户广告",
+        "icon": "plus",
+        "link": "#/client/ad/create"
+      },
+      {
+        "title": "客户广告列表",
+        "icon": "list",
+        "link": "#/client/ad/list"
+      }
+    ]
   }
 ]

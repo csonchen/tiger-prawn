@@ -1,0 +1,94 @@
+<div class="form-inline table-header">
+    <div class="form-group">
+        <label for="pagesize">每页显示：</label>
+        <select class="form-control" id="pagesize">
+            <option selected>10</option>
+            <option>20</option>
+            <option>50</option>
+        </select>
+    </div>
+    <div class="form-group pull-right">
+        <label for="search-query">搜索：</label>
+        <input type="search" class="form-control" id="search-query" placeholder="广告名称">
+    </div>
+</div>
+
+<table class="table table-bordered table-hover responsive-table smart-table title-eight" data-search="#search-query" data-pagination=".pagination" data-pagesize-controller="#pagesize" data-pagesize="10" data-url="{{API}}j_ad/" data-collection-id="client-ad-list">
+    <thead>
+    <tr>
+        <th>产品名称</th>
+        <th>关联合同</th>
+        <th>所属业务</th>
+        <th>合作方式</th>
+        <th>价格</th>
+        <th>产品链接</th>
+        <th>上线时间</th>
+        <th>负责商务</th>
+        <th>执行商务</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <script type="text/x-handlebars-template">
+        <tr id="{{id}}">
+            <td data-title="产品名称">
+                <a href="#name" class="edit">{{name}}</a>
+            </td>
+            <td data-title="关联合同">{{full_name}}</td>
+            <td data-title="所属业务">
+                <a href="#type" class="edit" data-type="select" data-options="types">{{pick type types}}</a>
+            </td>
+            <td data-title="合作方式">
+                {{#in type "1"}}
+                    <a href="#cooperation_type" class="edit" data-type="select" data-options="cooperation_types1">{{pick cooperation_type cooperation_types1}}</a>
+                {{else}}
+                    <a href="#cooperation_type" class="edit" data-type="select" data-options="cooperation_types2">{{pick cooperation_type cooperation_types2}}</a>
+                {{/in}}
+            </td>
+            <td data-title="价格(分)">
+                <a href="#money" data-title="价格(分)" class="edit" data-type="number" data-refresh="true">&yen;{{d100 money}}</a>
+            </td>
+            <td data-title="产品链接">
+                <a href="#link" class="edit">{{link}}</a>
+            </td>
+            <td data-title="上线时间">
+                <a href="#online_time" data-type="datetime" class="edit">{{online_time}}</a>
+            </td>
+            <td data-title="负责商务">
+                <a href="#owner" class="edit" data-type="select" data-options="owners">{{pick owner owners}}</a>
+            </td>
+            <td data-title="执行商务">
+                <a href="#execute_owner" class="edit" data-type="select" data-options="execute_owners">{{pick execute_owner execute_owners}}</a>
+            </td>
+            <td data-title="操作">
+                <div class="btn-group">
+                    <a href="#/diy/{{id}}/edit" class="btn btn-primary disabled"><i class="fa fa-edit"></i> 修改</a>
+                    <button class="btn btn-danger delete-button" title="撤回"><i class="fa fa-trash-o fa-fw"></i></button>
+                </div>
+            </td>
+        </tr>
+    </script>
+    </tbody>
+
+    <tfoot class="waiting">
+    <tr>
+        <td colspan="11">
+            <p align="center">
+                <i class="fa fa-spinner fa-spin fa-2x"></i><br/>加载中，请稍后
+            </p>
+        </td>
+    </tr>
+    </tfoot>
+</table>
+
+<nav class="pull-right">
+    <ul class="pagination">
+        <script type="text/x-handlebars-template">
+            <li><a href="#/to/{{prev}}"><i class="fa fa-chevron-left"></i></a></li>
+            {{#each pages}}
+            <li class="hidden-xs"><a href="#/to/{{index}}">{{label}}</a></li>
+            {{/each}}
+            <li><a href="#/to/{{next}}"><i class="fa fa-chevron-right"></i></a></li>
+        </script>
+    </ul>
+</nav>
