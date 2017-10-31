@@ -6,6 +6,14 @@
     ns.JyAD = Backbone.Model.extend({
         $me: null,
         urlRoot: tp.API + 'j_ad/',
+        fetch: function (options) {
+            if (this.get('start') || this.get('end')) {
+                options = options || {};
+                options.data = options.data || {};
+                _.extend(options.data, this.pick('start', 'end'));
+            }
+            Backbone.Model.prototype.fetch.call(this, options);
+        },
         toJSON: function (options) {
             var json = Backbone.Model.prototype.toJSON.call(this, options);
             if (options) { // from sync，因为{patch: true}

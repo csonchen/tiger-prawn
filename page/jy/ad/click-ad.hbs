@@ -1,0 +1,25 @@
+<table class="table table-bordered table-hover" data-ad_id="{{id}}" data-start="{{start}}" data-end="{{end}}" data-mediator-class="tp.page.ad.ClickSingleAd" data-url="{{API}}click/{{id}}" data-ranger=".date-range" data-defaults="id={{id}}" data-id-attribute="date">
+    <thead>
+    <tr>
+        <th>时间</th>
+        <th>单价（单位分）</th>
+        <th>个数</th>
+    </tr>
+    </thead>
+    <tbody>
+    <script type="text/x-handlebars-template">
+        {{{{raw-helper}}}}
+            <tr id="{{date}}">
+                <td>{{date}}</td>
+                <td><input type="number" value="{{quote_rmb}}" class="price form-control" tabindex="{{counter}}" {{#if disabled}}disabled{{/if}}/></td>
+                <td><input type="number" value="{{nums}}" class="cpa form-control" tabindex="{{counter}}" {{#if disabled}}disabled{{/if}}/></td>
+            </tr>
+        {{{{/raw-helper}}}}
+    </script>
+    </tbody>
+    <tfoot class="waiting">
+    <tr>
+        <td colspan="4"><p align="center"><i class="fa fa-spinner fa-spin fa-2x"></i><br>加载中，请稍候</p></td>
+    </tr>
+    </tfoot>
+</table>

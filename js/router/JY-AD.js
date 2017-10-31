@@ -9,7 +9,8 @@
         $me: null,
         routes: {
             "client/ad/create(/)": "create",
-            "client/ad/list(/)": "list"
+            "client/ad/list(/)": "list",
+            "ad/:id/click/(:start/:end)": "showAdClick"
         },
 
         create: function() {
@@ -29,6 +30,19 @@
             this.$body
                 .load('page/jy/ad/client-ad-list.html', init)
                 .setFramework('client client-ad-list', '客户广告列表');
+        },
+
+        showAdClick: function (id, start, end) {
+            var today = moment().add(-1, 'days').format(moment.DATE_FORMAT);
+            end = end ? end : today;
+            start = start ? start : moment().add(-7, 'days').format(moment.DATE_FORMAT);
+            var model = new tp.model.JyAD({
+                id: id,
+                start: start,
+                end: end
+            });
+            this.$body.load('page/jy/ad/click-ad.hbs', model, {API: tp.API});
+            this.$body.setFramework('has-date-range ad click click-ad', '录入数据');
         }
     })
 }(Nervenet.createNameSpace('tp.router'), _, Backbone));
