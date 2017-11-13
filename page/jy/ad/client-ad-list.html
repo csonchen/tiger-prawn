@@ -22,7 +22,8 @@
         <th>合作方式</th>
         <th>价格</th>
         <th>产品链接</th>
-        <th>上线时间</th>
+        <th>上线日期</th>
+        <th>下线日期</th>
         <th>负责商务</th>
         <th>执行商务</th>
     </tr>
@@ -51,8 +52,11 @@
             <td data-title="产品链接">
                 <a href="#link" class="edit">{{link}}</a>
             </td>
-            <td data-title="上线时间">
-                <a href="#online_time" data-type="datetime" class="edit">{{online_time}}</a>
+            <td data-title="上线日期">
+                <a href="#online_time" data-type="datetime" class="edit" data-value="{{online_time}}" data-format="YYYY-MM-DD">{{moment online_time}}</a>
+            </td>
+            <td data-title="下线日期">
+                <a href="#offline_time" data-type="datetime" class="edit" data-value="{{offline_time}}" data-format="YYYY-MM-DD">{{moment offline_time}}</a>
             </td>
             <td data-title="负责商务">
                 <a href="#owner" class="edit" data-type="select" data-options="owners">{{pick owner owners}}</a>
