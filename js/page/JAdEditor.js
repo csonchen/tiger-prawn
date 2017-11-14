@@ -4,12 +4,14 @@
 'use strict';
 
 (function (ns, Backbone, $, _) {
+    var cooperation = 0;
     ns.JAdEditor = tp.view.Loader.extend({
         $me: null,
         events: {
             'change [name=type]': 'type_changeHandler',
             'click .search-agreement-button': 'searchAgreementButton_clickHandler',
-            'keydown .agreement-keyword': 'agreementKeyword_keyDownHandler'
+            'keydown .agreement-keyword': 'agreementKeyword_keyDownHandler',
+            'change #cooperation_type1': 'cooperation_changeHandler'
         },
 
         render: function () {
@@ -31,6 +33,7 @@
 
             // init
             $('#cooperation1').show();
+            $('#market-type').hide();
             $('#cooperation2').hide();
             $('#form-rate').hide();
         },
@@ -40,19 +43,33 @@
 
             if (type && parseInt(type) === 1) {
                 $('#cooperation1').show();
+                if (cooperation == 3) { // 合作方式为评论，展示评论市场
+                    $('#market-type').show();
+                } else {
+                    $('#market-type').hide();
+                }
                 $('#cooperation2').hide();
                 $('#form-rate').hide();
             }
 
             if (type && parseInt(type) === 2) {
                 $('#cooperation1').hide();
+                $('#market-type').hide();
                 $('#cooperation2').show();
                 $('#form-rate').show();
             }
         },
 
+        cooperation_changeHandler: function(event) {
+            cooperation = event.target.value;
+            if (cooperation == 3) { // 合作方式为评论，展示评论市场
+                $('#market-type').show();
+            } else {
+                $('#market-type').hide();
+            }
+        },
+
         agreementKeyword_keyDownHandler: function (event) {
-            console.log('sss')
             if (event.keyCode === 13) {
                 this.searchAgreement();
                 event.preventDefault();
