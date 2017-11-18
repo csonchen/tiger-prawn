@@ -11,7 +11,8 @@
             "client/ad/create(/)": "create",
             "client/ad/list(/)": "list",
             "ad/:id/click/(:start/:end)": "showAdClick",
-            "ad/:id/market": "showAdMarket"
+            "ad/:id/ad_market/(:start/:end)": "showAdMarket",
+            "ad/:id/market": "showAdMarketList"
         },
 
         create: function() {
@@ -46,7 +47,20 @@
             this.$body.setFramework('has-date-range ad click click-ad', '录入数据');
         },
 
-        showAdMarket: function (id) {
+        showAdMarket: function (id, start, end) {
+            var today = moment().add(-1, 'days').format(moment.DATE_FORMAT);
+            end = end ? end : today;
+            start = start ? start : moment().add(-7, 'days').format(moment.DATE_FORMAT);
+            var model = new tp.model.JyAD({
+                id: id,
+                start: start,
+                end: end
+            });
+            this.$body.load('page/jy/ad/market-ad.hbs', model, {API: tp.API});
+            this.$body.setFramework('has-date-range ad market market-ad', '录入数据-评论市场');
+        },
+
+        showAdMarketList: function (id) {
             var init = {API: tp.API, id: id};
             this.$body
                 .load('page/jy/ad/ad-market.hbs', init)
