@@ -66,7 +66,13 @@
             </td>
             <td data-title="操作">
                 <div class="btn-group">
-                    <a href="#/ad/{{id}}/click/" class="btn btn-primary" title="录入数据"><i class="fa fa-edit"></i></a>
+                    {{#in type "1"}}
+                        {{#in cooperation_type "3"}}
+                            <a href="#/ad/{{id}}/market" class="btn btn-default" title="查看评论市场"><i class="fa fa-th-list"></i></a>
+                        {{else}}
+                            <a href="#/ad/{{id}}/click/" class="btn btn-primary" title="录入数据"><i class="fa fa-edit"></i></a>
+                        {{/in}}
+                    {{/in}}
                     <button class="btn btn-danger delete-button" title="撤回"><i class="fa fa-trash-o fa-fw"></i></button>
                 </div>
             </td>

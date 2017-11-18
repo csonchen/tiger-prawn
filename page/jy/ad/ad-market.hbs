@@ -1,0 +1,54 @@
+<table class="table table-bordered table-hover responsive-table smart-table title-eight" data-url="{{API}}j_ad/market/{{id}}" data-collection-id="ad_market">
+    <thead>
+    <tr>
+        <th>产品名称</th>
+        <th>评论市场</th>
+        <th>链接</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <script type="text/x-handlebars-template">
+    {{{{raw-helper}}}}
+        <tr id="{{id}}">
+            <td data-title="产品名称">{{name}}</td>
+            <td data-title="评论市场">
+                <a href="#type" class="edit" data-type="select" data-options="types">{{pick type types}}</a>
+            </td>
+            <td data-title="链接">
+                <a href="#link" class="edit">{{link}}</a>
+            </td>
+            <td data-title="操作">
+                <div class="btn-group">
+                    <a href="#/ad/{{ad_id}}/click/" class="btn btn-primary" title="录入数据"><i class="fa fa-edit"></i></a>
+                    <button class="btn btn-danger delete-button" title="撤回"><i class="fa fa-trash-o fa-fw"></i></button>
+                </div>
+            </td>
+        </tr>
+    {{{{/raw-helper}}}}
+    </script>
+    </tbody>
+
+    <tfoot class="waiting">
+    <tr>
+        <td colspan="11">
+            <p align="center">
+                <i class="fa fa-spinner fa-spin fa-2x"></i><br/>加载中，请稍后
+            </p>
+        </td>
+    </tr>
+    </tfoot>
+</table>
+
+<nav class="pull-right">
+    <ul class="pagination">
+        <script type="text/x-handlebars-template">
+            <li><a href="#/to/{{prev}}"><i class="fa fa-chevron-left"></i></a></li>
+            {{#each pages}}
+            <li class="hidden-xs"><a href="#/to/{{index}}">{{label}}</a></li>
+            {{/each}}
+            <li><a href="#/to/{{next}}"><i class="fa fa-chevron-right"></i></a></li>
+        </script>
+    </ul>
+</nav>

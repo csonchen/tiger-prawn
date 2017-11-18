@@ -10,7 +10,8 @@
         routes: {
             "client/ad/create(/)": "create",
             "client/ad/list(/)": "list",
-            "ad/:id/click/(:start/:end)": "showAdClick"
+            "ad/:id/click/(:start/:end)": "showAdClick",
+            "ad/:id/market": "showAdMarket"
         },
 
         create: function() {
@@ -43,6 +44,13 @@
             });
             this.$body.load('page/jy/ad/click-ad.hbs', model, {API: tp.API});
             this.$body.setFramework('has-date-range ad click click-ad', '录入数据');
+        },
+
+        showAdMarket: function (id) {
+            var init = {API: tp.API, id: id};
+            this.$body
+                .load('page/jy/ad/ad-market.hbs', init)
+                .setFramework('ad-market ad-market-list', '客户广告-评论市场列表');
         }
     })
 }(Nervenet.createNameSpace('tp.router'), _, Backbone));
