@@ -123,6 +123,20 @@
                     container.append(container.find('#' + model.id));
                 });
             }
+
+            // 计算总价
+            var total = 0;
+            this.$('tbody tr:not(#amount)').each(function () {
+                var tr = $(this),
+                    price = Number(tr.find('.price').val()),
+                    num = Number(tr.find('.cpa').val());
+                var per_total = price * num;
+                tr.children().eq(4).text(per_total.toFixed(2));
+
+                total = total + per_total;
+            });
+
+            this.$('tbody tr#amount').children().eq(4).text(total.toFixed(2));
             this.interval = setInterval(_.bind(this.sync, this), rate);
             this.ad_id = this.$el.data('ad_id');
         },
@@ -371,7 +385,8 @@
                 cpas.push({
                     click_date: this.id,
                     nums: self.find('.cpa').val(),
-                    click_rmb: self.find('.price').val()
+                    click_rmb: self.find('.price').val(),
+                    quotes: self.find('.quotes').val(),
                 });
                 self.removeClass('modified');
             });
@@ -384,8 +399,30 @@
             this.$el.addClass('syncing');
         },
         input_changeHandler: function (event) {
-            var tr = $(event.currentTarget).closest('tr');
+            var tr = $(event.currentTarget).closest('tr'),
+                cpa = Number(tr.find('.cpa').val());
+            var per_total = cpa * Number(tr.find('.price').val());
             tr.addClass('modified');
+            tr.addClass('modified')
+                .children().eq(4).text(per_total.toFixed(2));
+
+            // 计算总价　
+            var total_money = 0,
+                total_quotes = 0,
+                total_nums = 0;
+            this.$('tbody tr:not(#amount)').each(function () {
+                var tr = $(this),
+                    price = Number(tr.find('.price').val()),
+                    num = Number(tr.find('.cpa').val()),
+                    quote = Number(tr.find('.quotes').val());
+                var per_total = price * num;
+                total_money = total_money + per_total;
+                total_quotes = total_quotes + quote;
+                total_nums = total_nums + num;
+            });
+            this.$('tbody tr#amount').children().eq(1).text(total_quotes);
+            this.$('tbody tr#amount').children().eq(2).text(total_nums);
+            this.$('tbody tr#amount').children().eq(4).text(total_money.toFixed(2));
         },
         remote_successHandler: function () {
             this.$el.removeClass('syncing');
